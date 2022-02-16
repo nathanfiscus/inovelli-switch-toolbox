@@ -133,7 +133,7 @@ class App extends React.Component {
       aboutDialogOpen: false,
       optionsDialogOpen: false,
       type: 0,
-      tab: 0,
+      tab: 1,
       selectedLED: 0,
       highlight: null,
       ledConfigs: JSON.parse(
@@ -345,7 +345,8 @@ class App extends React.Component {
                       >
                         {Switches.map((sw, index) => (
                           <MenuItem key={sw.displayName} value={index}>
-                            {sw.displayName}
+                            {sw.displayName} (
+                            {sw.protocol === "zwave" ? "Z-Wave" : "ZigBee"})
                           </MenuItem>
                         ))}
                       </Select>
@@ -444,6 +445,7 @@ class App extends React.Component {
                     }
                     onChange={this.setConfigValue}
                     format={formatType}
+                    protocol={Switches[this.state.type].protocol}
                   />
                 )}
                 {this.state.tab === 2 && (

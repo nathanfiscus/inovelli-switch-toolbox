@@ -39,6 +39,23 @@ const styles = (theme) => ({
       "50%": { bottom: "30%" },
       "100%": { bottom: "-65%" },
     },
+    "@keyframes smalltobig": {
+      "0%": { height: "80%", top: "5%" },
+      "50%": { height: "500%", top: "-200%" },
+      "100%": { height: "80%", top: "5%" },
+    },
+    "@keyframes openclose-top": {
+      "0%": { top: "12%" },
+      "37%": { top: "-45%" },
+      "75%": { top: "12%" },
+      "100%": { top: "12%" },
+    },
+    "@keyframes openclosebottom": {
+      "0%": { top: "12%" },
+      "37%": { top: "65%" },
+      "75%": { top: "12%" },
+      "100%": { top: "12%" },
+    },
     "@keyframes pulse_Shadow": {
       "50%": {
         boxShadow: "0px 0px 0px 0px",
@@ -78,6 +95,24 @@ const styles = (theme) => ({
   chase: {
     animationDuration: "2s",
     animationName: "chase",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  smalltobig: {
+    animationDuration: "2s",
+    animationName: "smalltobig",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  openclose: {
+    animationDuration: "1.5s",
+    animationName: "openclose-top",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  openclosebottom: {
+    animationDuration: "1.5s",
+    animationName: "openclosebottom",
     position: "absolute",
     animationTimingFunction: "linear",
   },
@@ -152,8 +187,26 @@ class LED extends React.Component {
         effectStyles.boxShadow = "unset";
         effectStyles.zIndex = 0;
         break;
+      case "Small to Big":
+        effectCSS += ` ${this.props.classes.smalltobig}`;
+        effectCSS_Shadow += ` ${this.props.classes.chase_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent 30%,${SELECTED_COLOR},${SELECTED_COLOR},transparent 70%)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
+      case "Open/Close":
+        effectCSS += ` ${this.props.classes.openclose}`;
+        effectCSS_Shadow += ` ${this.props.classes.chase_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        effectStyles.height = "75%";
+        break;
       case "Solid":
         break;
+      case "Clear Effect":
       case "Off (Notification Cleared)":
         effectStyles.backgroundColor = "unset";
         effectCSS_Shadow = ";";
@@ -189,6 +242,24 @@ class LED extends React.Component {
             ...effectStyles,
           }}
         />
+        {effect.name === "Open/Close" && (
+          <span
+            id="notification-led2"
+            className={
+              this.props.classes.notificationLED +
+              ` ${this.props.classes.openclosebottom} ${this.props.classes.forever}`
+            }
+            style={{
+              backgroundColor: SELECTED_COLOR,
+              color: SELECTED_COLOR,
+              position: "absolute",
+              top: "25%",
+              ...this.props.style,
+              ...effectStyles,
+              zIndex: "3",
+            }}
+          />
+        )}
       </div>
     );
   }

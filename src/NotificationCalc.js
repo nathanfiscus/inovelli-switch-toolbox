@@ -278,12 +278,16 @@ class NotificationCalc extends React.Component {
         </FormControl>
         <TextField
           style={{ marginTop: "60px" }}
-          value={byteArrayToLong([
-            this.props.config[this.props.byteOrder[0]],
-            this.props.config[this.props.byteOrder[1]],
-            this.props.config[this.props.byteOrder[2]],
-            this.props.config[this.props.byteOrder[3]],
-          ]).toString(Number(this.props.format || 10))}
+          value={
+            this.props.protocol === "zwave"
+              ? byteArrayToLong([
+                  this.props.config[this.props.byteOrder[0]],
+                  this.props.config[this.props.byteOrder[1]],
+                  this.props.config[this.props.byteOrder[2]],
+                  this.props.config[this.props.byteOrder[3]],
+                ]).toString(Number(this.props.format || 10))
+              : Object.values(this.props.config).join(",")
+          }
           readOnly={true}
           label={`Configuration Value (Parameter ${
             this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
