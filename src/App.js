@@ -28,8 +28,8 @@ import SceneTable from "./SceneTable";
 import StandardLEDTools from "./StandardLEDTools";
 import TuneIcon from "@material-ui/icons/Tune";
 import OptionsDialog from "./Options";
-import Switches from "./Switches";
-import CPUIcon from "./CPU.js";
+import SwitchDefinitions from "./SwitchDefinitions";
+import CPUIcon from "./icons/CPU.js";
 
 let Gradient = require("gradient2");
 let gradient = new Gradient({
@@ -128,7 +128,8 @@ class App extends React.Component {
     super(props);
     let userFirmwares = JSON.parse(localStorage.getItem("firmwares")) || {};
     let firmwareVersion =
-      userFirmwares[Switches[0].id] || Switches[0].defaultFirmware;
+      userFirmwares[SwitchDefinitions[0].id] ||
+      SwitchDefinitions[0].defaultFirmware;
     this.state = {
       aboutDialogOpen: false,
       optionsDialogOpen: false,
@@ -138,12 +139,14 @@ class App extends React.Component {
       highlight: null,
       ledConfigs: JSON.parse(
         JSON.stringify(
-          Switches[0].firmwares[firmwareVersion].leds.map((l) => l.default)
+          SwitchDefinitions[0].firmwares[firmwareVersion].leds.map(
+            (l) => l.default
+          )
         )
       ),
       notificationConfigs: JSON.parse(
         JSON.stringify(
-          Switches[0].firmwares[firmwareVersion].leds.map(
+          SwitchDefinitions[0].firmwares[firmwareVersion].leds.map(
             (l) => l.defaultNotification
           )
         )
@@ -197,22 +200,22 @@ class App extends React.Component {
 
   setSwitchType = (e) => {
     const firmwareVersion =
-      this.state.userFirmwares[Switches[e.target.value].id] ||
-      Switches[e.target.value].defaultFirmware;
+      this.state.userFirmwares[SwitchDefinitions[e.target.value].id] ||
+      SwitchDefinitions[e.target.value].defaultFirmware;
     this.setState({
       firmwareVersion,
       type: e.target.value,
       selectedLED: 0,
       ledConfigs: JSON.parse(
         JSON.stringify(
-          Switches[e.target.value].firmwares[firmwareVersion].leds.map(
+          SwitchDefinitions[e.target.value].firmwares[firmwareVersion].leds.map(
             (l) => l.default
           )
         )
       ),
       notificationConfigs: JSON.parse(
         JSON.stringify(
-          Switches[e.target.value].firmwares[firmwareVersion].leds.map(
+          SwitchDefinitions[e.target.value].firmwares[firmwareVersion].leds.map(
             (l) => l.defaultNotification
           )
         )
@@ -258,7 +261,7 @@ class App extends React.Component {
   setFirmwareVersion = (version) => () => {
     this.setState((lastState) => {
       let userFirmwares = { ...lastState.userFirmwares };
-      userFirmwares[Switches[lastState.type].id] = version;
+      userFirmwares[SwitchDefinitions[lastState.type].id] = version;
       localStorage.setItem("firmwares", JSON.stringify(userFirmwares));
       return {
         firmwareAnchorEl: null,
@@ -310,27 +313,27 @@ class App extends React.Component {
               <div>
                 <Switch
                   leds={
-                    Switches[this.state.type].firmwares[
+                    SwitchDefinitions[this.state.type].firmwares[
                       this.state.firmwareVersion
                     ].leds
                   }
-                  paddles={Switches[this.state.type].paddles}
+                  paddles={SwitchDefinitions[this.state.type].paddles}
                   configs={
                     this.state.tab !== 0
                       ? this.state.notificationConfigs
                       : this.state.ledConfigs
                   }
                   scenes={
-                    Switches[this.state.type].firmwares[
+                    SwitchDefinitions[this.state.type].firmwares[
                       this.state.firmwareVersion
                     ].scenes
                   }
                   effects={
-                    Switches[this.state.type].firmwares[
+                    SwitchDefinitions[this.state.type].firmwares[
                       this.state.firmwareVersion
                     ].effects
                   }
-                  images={Switches[this.state.type].images}
+                  images={SwitchDefinitions[this.state.type].images}
                   onSceneTriggered={this.onSceneTrigger}
                 />
               </div>
@@ -343,7 +346,7 @@ class App extends React.Component {
                         value={this.state.type}
                         onChange={this.setSwitchType}
                       >
-                        {Switches.map((sw, index) => (
+                        {SwitchDefinitions.map((sw, index) => (
                           <MenuItem key={sw.displayName} value={index}>
                             {sw.displayName} (
                             {sw.protocol === "zwave" ? "Z-Wave" : "ZigBee"})
@@ -371,20 +374,20 @@ class App extends React.Component {
                       onClose={this.handleCloseFirmwareMenu}
                     >
                       <ListSubheader>Firmware Version</ListSubheader>
-                      {Object.keys(Switches[this.state.type].firmwares).map(
-                        (f) => (
-                          <MenuItem
-                            key={f}
-                            onClick={this.setFirmwareVersion(f)}
-                            value={f}
-                          >
-                            {f}
-                          </MenuItem>
-                        )
-                      )}
+                      {Object.keys(
+                        SwitchDefinitions[this.state.type].firmwares
+                      ).map((f) => (
+                        <MenuItem
+                          key={f}
+                          onClick={this.setFirmwareVersion(f)}
+                          value={f}
+                        >
+                          {f}
+                        </MenuItem>
+                      ))}
                     </Menu>
                   </div>
-                  {Switches[this.state.type].firmwares[
+                  {SwitchDefinitions[this.state.type].firmwares[
                     this.state.firmwareVersion
                   ].leds.length > 1 && (
                     <FormControl fullWidth={true} style={{ marginTop: "10px" }}>
@@ -393,7 +396,7 @@ class App extends React.Component {
                         value={this.state.selectedLED}
                         onChange={this.setSelectedLED}
                       >
-                        {Switches[this.state.type].firmwares[
+                        {SwitchDefinitions[this.state.type].firmwares[
                           this.state.firmwareVersion
                         ].leds.map((led, index) => (
                           <MenuItem key={led.name} value={index}>
@@ -420,13 +423,13 @@ class App extends React.Component {
                 {this.state.tab === 1 && (
                   <NotificationCalc
                     effects={
-                      Switches[this.state.type].firmwares[
+                      SwitchDefinitions[this.state.type].firmwares[
                         this.state.firmwareVersion
                       ].effects
                     }
-                    byteOrder={Switches[this.state.type].byteOrder}
+                    byteOrder={SwitchDefinitions[this.state.type].byteOrder}
                     parameters={
-                      Switches[this.state.type].firmwares[
+                      SwitchDefinitions[this.state.type].firmwares[
                         this.state.firmwareVersion
                       ].leds[this.state.selectedLED].parameters
                     }
@@ -434,18 +437,18 @@ class App extends React.Component {
                       this.state.notificationConfigs[this.state.selectedLED]
                     }
                     colorRange={
-                      Switches[this.state.type].firmwares[
+                      SwitchDefinitions[this.state.type].firmwares[
                         this.state.firmwareVersion
                       ].leds[this.state.selectedLED].colorRange
                     }
                     brightnessRange={
-                      Switches[this.state.type].firmwares[
+                      SwitchDefinitions[this.state.type].firmwares[
                         this.state.firmwareVersion
                       ].leds[this.state.selectedLED].brightnessRange
                     }
                     onChange={this.setConfigValue}
                     format={formatType}
-                    protocol={Switches[this.state.type].protocol}
+                    protocol={SwitchDefinitions[this.state.type].protocol}
                   />
                 )}
                 {this.state.tab === 2 && (
@@ -453,7 +456,7 @@ class App extends React.Component {
                     highlight={this.state.highlight}
                     sceneMethod={sceneMethod}
                     scenes={
-                      Switches[this.state.type].firmwares[
+                      SwitchDefinitions[this.state.type].firmwares[
                         this.state.firmwareVersion
                       ].scenes
                     }
@@ -462,17 +465,17 @@ class App extends React.Component {
                 {this.state.tab === 0 && (
                   <StandardLEDTools
                     parameters={
-                      Switches[this.state.type].firmwares[
+                      SwitchDefinitions[this.state.type].firmwares[
                         this.state.firmwareVersion
                       ].leds[this.state.selectedLED].parameters
                     }
                     colorRange={
-                      Switches[this.state.type].firmwares[
+                      SwitchDefinitions[this.state.type].firmwares[
                         this.state.firmwareVersion
                       ].leds[this.state.selectedLED].colorRange
                     }
                     brightnessRange={
-                      Switches[this.state.type].firmwares[
+                      SwitchDefinitions[this.state.type].firmwares[
                         this.state.firmwareVersion
                       ].leds[this.state.selectedLED].brightnessRange
                     }

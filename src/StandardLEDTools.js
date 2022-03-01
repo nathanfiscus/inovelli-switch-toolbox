@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Brightness0 from "@material-ui/icons/Brightness2";
 import Brightness7 from "@material-ui/icons/Brightness7";
 import {
@@ -10,19 +9,16 @@ import {
   InputAdornment,
   Tooltip,
   IconButton,
-  SvgIcon,
   TextField,
   Menu,
   Snackbar,
   MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
 } from "@material-ui/core";
 import Slide from "@material-ui/core/Slide";
-import copyToClipboard from "./ClipboardAccess";
+import copyToClipboard from "./utils/ClipboardAccess";
 import YAML from "json-to-pretty-yaml";
-import { CONFIG_PARAMETER } from "./Switches";
+import { CONFIG_PARAMETER } from "./SwitchDefinitions/ConfigurationDefinitions";
+import CopyIcon from "./icons/Copy";
 
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
@@ -204,11 +200,7 @@ class StandardLEDTools extends React.PureComponent {
               <InputAdornment position="end">
                 <Tooltip title="Copy to Clipboard">
                   <IconButton edge="end" onClick={this.toggleMenuColor}>
-                    <SvgIcon>
-                      <svg viewBox="0 0 24 24">
-                        <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
-                      </svg>
-                    </SvgIcon>
+                    <CopyIcon />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -245,11 +237,7 @@ class StandardLEDTools extends React.PureComponent {
               <InputAdornment position="end">
                 <Tooltip title="Copy to Clipboard">
                   <IconButton edge="end" onClick={this.toggleMenu}>
-                    <SvgIcon>
-                      <svg viewBox="0 0 24 24">
-                        <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
-                      </svg>
-                    </SvgIcon>
+                    <CopyIcon />
                   </IconButton>
                 </Tooltip>
                 <Menu

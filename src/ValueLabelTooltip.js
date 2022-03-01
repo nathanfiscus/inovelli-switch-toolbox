@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Tooltip } from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
 
-const durationFormater = val => {
+const durationFormater = (val) => {
   switch (val) {
     case 255:
       return "Forever";
@@ -44,7 +44,7 @@ function ValueLabelTooltip(props) {
   return (
     <Tooltip
       PopperProps={{
-        popperRef
+        popperRef,
       }}
       open={open}
       enterTouchDelay={0}
@@ -59,7 +59,7 @@ function ValueLabelTooltip(props) {
 ValueLabelTooltip.propTypes = {
   children: PropTypes.element.isRequired,
   open: PropTypes.bool.isRequired,
-  value: PropTypes.number.isRequired
+  value: PropTypes.number.isRequired,
 };
 
 export default ValueLabelTooltip;

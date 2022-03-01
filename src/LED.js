@@ -71,7 +71,7 @@ const styles = (theme) => ({
     },
   },
   notificationLED: {
-    width: "7px",
+    width: "8px",
     height: "100%",
     backgroundColor: "#CCCCCC",
   },

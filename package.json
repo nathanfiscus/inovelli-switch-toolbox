@@ -2,18 +2,18 @@
   "name": "inovelli-notification-util",
   "homepage": "https://nathanfiscus.github.io/inovelli-notification-calc",
   "repository": "https://github.com/nathanfiscus/inovelli-notification-calc",
-  "version": "0.1.0",
+  "version": "4.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.5.0",
-    "@material-ui/icons": "^4.5.1",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "clipboard-polyfill": "^2.8.6",
-    "gh-pages": "^2.1.1",
-    "gradient2": "^1.0.3",
+    "gh-pages": "^3.2.3",
+    "gradient2": "^1.0.5",
     "json-to-pretty-yaml": "^1.2.2",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-scripts": "^3.4.3"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

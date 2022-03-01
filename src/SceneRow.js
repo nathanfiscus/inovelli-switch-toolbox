@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import YAML from "json-to-pretty-yaml";
-import copyToClipboard from "./ClipboardAccess";
+import copyToClipboard from "./utils/ClipboardAccess";
 
 const styles = (theme) => ({
   disabled: {
