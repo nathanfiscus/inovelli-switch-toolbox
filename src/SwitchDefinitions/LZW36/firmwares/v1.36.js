@@ -7,9 +7,9 @@ export default {
       id: "led-0",
       name: "Light LED",
       pos: {
-        top: "162px",
-        right: "129px",
-        height: "134px",
+        top: "146px",
+        right: "108px",
+        height: "153px",
       },
       parameters: {
         [CONFIG_PARAMETER.COLOR]: 18,
@@ -33,9 +33,9 @@ export default {
       id: "led-1",
       name: "Fan LED",
       pos: {
-        bottom: "162px",
-        right: "129px",
-        height: "134px",
+        bottom: "146px",
+        right: "108px",
+        height: "153px",
       },
       parameters: {
         [CONFIG_PARAMETER.COLOR]: 20,

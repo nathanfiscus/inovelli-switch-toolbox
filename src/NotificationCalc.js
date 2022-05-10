@@ -186,13 +186,15 @@ class NotificationCalc extends React.Component {
   render() {
     return (
       <div>
-        <div style={{ textAlign: "right" }}>
-          <Tooltip title="Decode a Value">
-            <IconButton onClick={this.openDecoder}>
-              <SettingsBackupRestoreIcon />
-            </IconButton>
-          </Tooltip>
-        </div>
+        {this.props.protocol !== "zigbee" && (
+          <div style={{ textAlign: "right" }}>
+            <Tooltip title="Decode a Value">
+              <IconButton onClick={this.openDecoder}>
+                <SettingsBackupRestoreIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+        )}
         <Typography gutterBottom>Color</Typography>
         <div
           className={this.props.classes.colorHelper}
@@ -290,9 +292,13 @@ class NotificationCalc extends React.Component {
               : Object.values(this.props.config).join(",")
           }
           readOnly={true}
-          label={`Configuration Value (Parameter ${
+          label={`Configuration Value${
             this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
-          })`}
+              ? ` (Parameter ${
+                  this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
+                })`
+              : ""
+          }`}
           fullWidth={true}
           margin="normal"
           variant="outlined"

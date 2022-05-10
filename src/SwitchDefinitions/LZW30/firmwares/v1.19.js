@@ -7,9 +7,9 @@ export default {
       id: "led-0",
       name: "",
       pos: {
-        height: "39px",
-        bottom: "162px",
-        right: "129px",
+        height: "43px",
+        bottom: "148px",
+        right: "108px",
       },
       parameters: {
         [CONFIG_PARAMETER.COLOR]: 5,

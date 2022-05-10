@@ -1,5 +1,5 @@
 import v136 from "./firmwares/v1.36";
-import lzw36 from "../../images/lzw36.gif";
+import lzw36 from "../../images/lzw36-c.png";
 
 export default {
   protocol: "zwave",
@@ -66,9 +66,9 @@ export default {
       id: "lzw36-paddles",
       src: lzw36,
       pos: {
-        left: "114px",
-        width: "165px",
-        top: "149px",
+        left: "0px",
+        width: "100%",
+        top: "0px",
       },
     },
   ],

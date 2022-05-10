@@ -1,5 +1,5 @@
 import React from "react";
-import lzw30sn from "./images/lzw31.png";
+import lzw30sn from "./images/lzw30-c.png";
 
 import NotificationLED from "./NotificationLED";
 
@@ -56,7 +56,7 @@ class Switch extends React.Component {
   render() {
     return (
       <div style={{ position: "relative" }}>
-        <img alt="Inovelli-LZW30-SN" src={lzw30sn} />
+        <img src={lzw30sn} style={{ width: "100%" }} />
         {this.props.images.map((img) => (
           <img
             key={img.id}

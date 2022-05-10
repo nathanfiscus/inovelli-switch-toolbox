@@ -1,4 +1,4 @@
-import v5 from "./firmwares/v5";
+import v10 from "./firmwares/v10";
 
 export default {
   protocol: "zigbee",
@@ -24,8 +24,8 @@ export default {
     },
   ],
   images: [],
-  defaultFirmware: "5",
+  defaultFirmware: "10",
   firmwares: {
-    5: v5,
+    10: v10,
   },
 };

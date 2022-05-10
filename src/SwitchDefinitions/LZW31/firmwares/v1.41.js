@@ -8,8 +8,8 @@ export default {
       name: "",
       pos: {
         height: "227px",
-        bottom: "143px",
-        right: "150px",
+        bottom: "148px",
+        right: "109px",
       },
       parameters: {
         [CONFIG_PARAMETER.COLOR]: 13,

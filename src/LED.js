@@ -27,7 +27,7 @@ const styles = (theme) => ({
   "@global": {
     "@keyframes pulse": {
       "50%": {
-        background: "#CCCCCC",
+        background: "#AAAAAA",
         boxShadow: "0px 0px 0px 0px",
       },
     },
@@ -71,9 +71,9 @@ const styles = (theme) => ({
     },
   },
   notificationLED: {
-    width: "8px",
+    width: "10px",
     height: "100%",
-    backgroundColor: "#CCCCCC",
+    backgroundColor: "#888888",
   },
   forever: {
     animationIterationCount: "infinite",
@@ -159,6 +159,7 @@ class LED extends React.Component {
       overflow: "hidden",
       position: "relative",
       //border: "1px solid #eeeeee",
+      backgroundColor: "#888888",
       boxShadow:
         "0px 0px " +
         Math.ceil(this.props.level / 4) +

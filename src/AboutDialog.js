@@ -27,15 +27,15 @@ class AboutDialog extends React.Component {
         <DialogTitle>About</DialogTitle>
         <DialogContent>
           <Typography variant="h4" gutterBottom>
-            Version 4.0.0 (Jan 5, 2021)
+            Version 4.1.0 (May 2022)
           </Typography>
           <Typography variant="h6">About the Tool</Typography>
           <Typography variant="caption" gutterBottom={true}>
             This is a simple application to assist in calculating the
-            configuration values to send to your Inovelli v2 ZWave Light
-            switches. The values calculated by this tool can be used by any
-            compatible ZWave controller. See your controller documentation for
-            information on where to use the values produced by this tool.
+            configuration values to send to your Inovelli v2 ZWave and Zigbee
+            Light switches. The values calculated by this tool can be used by
+            any compatible ZWave controller. See your controller documentation
+            for information on where to use the values produced by this tool.
             <br />
             <br />
           </Typography>
@@ -43,13 +43,13 @@ class AboutDialog extends React.Component {
           <List dense={true}>
             <ListItem>
               <ListItemText
-                primary="Inovelli LZW30-SN-1"
+                primary="Inovelli LZW30-SN"
                 secondary="On/Off Switch + Scenes"
               />
             </ListItem>
             <ListItem>
               <ListItemText
-                primary="Inovelli  LZW31-SN-1"
+                primary="Inovelli LZW31-SN"
                 secondary="Dimmer Switch + Scenes"
               />
             </ListItem>
@@ -61,14 +61,20 @@ class AboutDialog extends React.Component {
             </ListItem>
             <ListItem>
               <ListItemText
-                primary="Inovelli  LZW31"
+                primary="Inovelli LZW31"
                 secondary="Dimmer Switch (No Scenes or Notifications)"
               />
             </ListItem>
             <ListItem>
               <ListItemText
-                primary="Inovelli  LZW36"
+                primary="Inovelli LZW36"
                 secondary="Fan+Light Dimmer"
+              />
+            </ListItem>{" "}
+            <ListItem>
+              <ListItemText
+                primary="Inovelli VZM31-SN"
+                secondary="2-in-1 Switch + Dimmer"
               />
             </ListItem>
           </List>

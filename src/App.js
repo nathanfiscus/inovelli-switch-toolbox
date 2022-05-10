@@ -18,6 +18,7 @@ import {
   Badge,
   Menu,
   ListSubheader,
+  ListItemText,
 } from "@material-ui/core";
 import ThemeProvider from "./ThemeProvider";
 import InfoOutlined from "@material-ui/icons/InfoOutlined";
@@ -63,9 +64,11 @@ const styles = (theme) => ({
     paddingTop: theme.spacing(3),
     marginBottom: theme.spacing(6),
     "&>*": {
-      minWidth: "400px",
+      minWidth: "375px",
+      maxWidth: "375px",
       "&:last-child": {
         maxWidth: "480px",
+        width: "100%",
       },
     },
   },
@@ -348,8 +351,12 @@ class App extends React.Component {
                       >
                         {SwitchDefinitions.map((sw, index) => (
                           <MenuItem key={sw.displayName} value={index}>
-                            {sw.displayName} (
-                            {sw.protocol === "zwave" ? "Z-Wave" : "ZigBee"})
+                            <ListItemText
+                              primary={sw.displayName}
+                              secondary={
+                                sw.protocol === "zwave" ? "Z-Wave" : "ZigBee"
+                              }
+                            />
                           </MenuItem>
                         ))}
                       </Select>
@@ -416,7 +423,7 @@ class App extends React.Component {
                   >
                     <Tab label="LED" />
                     <Tab label="Notifications" />
-                    <Tab label="Scenes" />
+                    {/* <Tab label="Scenes" /> */}
                   </Tabs>
                 </div>
 
