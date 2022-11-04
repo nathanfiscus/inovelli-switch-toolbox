@@ -9,7 +9,7 @@ export default {
       pos: {
         height: "227px",
         bottom: "148px",
-        right: "109px",
+        right: "108px",
       },
       parameters: {
         [CONFIG_PARAMETER.COLOR]: 13,

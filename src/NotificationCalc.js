@@ -52,6 +52,14 @@ const styles = (theme) => ({
   switchPicker: {
     marginBottom: theme.spacing(3),
   },
+  valueWrapper: {
+    marginTop: theme.spacing(3),
+    display: "flex",
+    alignItems: "center",
+    "&>*": {
+      flex: "1 1 auto",
+    },
+  },
 });
 
 const longToByteArray = function (/*long*/ long) {
@@ -99,41 +107,55 @@ class NotificationCalc extends React.Component {
 
   handleCopyNumber = () => {
     this.setState({ anchor: null });
-    copyToClipboard(
-      byteArrayToLong([
-        this.props.config[this.props.byteOrder[0]],
-        this.props.config[this.props.byteOrder[1]],
-        this.props.config[this.props.byteOrder[2]],
-        this.props.config[this.props.byteOrder[3]],
-      ]).toString(Number(this.props.format || 10)),
-      this.handleOnCopy
-    );
+    if (this.props.protocol !== "zwave") {
+      copyToClipboard(
+        Object.values(this.props.config).join(","),
+        this.handleOnCopy
+      );
+    } else {
+      copyToClipboard(
+        byteArrayToLong([
+          this.props.config[this.props.byteOrder[0]],
+          this.props.config[this.props.byteOrder[1]],
+          this.props.config[this.props.byteOrder[2]],
+          this.props.config[this.props.byteOrder[3]],
+        ]).toString(Number(this.props.format || 10)),
+        this.handleOnCopy
+      );
+    }
   };
 
   handleCopyYAML = () => {
     this.setState({ anchor: null });
-    copyToClipboard(
-      YAML.stringify({
-        parameter: this.props.parameters[CONFIG_PARAMETER.LED_EFFECT],
-        value:
-          this.props.format === "10"
-            ? parseInt(
-                byteArrayToLong([
+    if (this.props.protocol !== "zwave") {
+      copyToClipboard(
+        YAML.stringify(Object.values(this.props.config)),
+        this.handleOnCopy
+      );
+    } else {
+      copyToClipboard(
+        YAML.stringify({
+          parameter: this.props.parameters[CONFIG_PARAMETER.LED_EFFECT],
+          value:
+            this.props.format === "10"
+              ? parseInt(
+                  byteArrayToLong([
+                    this.props.config[this.props.byteOrder[0]],
+                    this.props.config[this.props.byteOrder[1]],
+                    this.props.config[this.props.byteOrder[2]],
+                    this.props.config[this.props.byteOrder[3]],
+                  ]).toString(Number(this.props.format || 10))
+                )
+              : byteArrayToLong([
                   this.props.config[this.props.byteOrder[0]],
                   this.props.config[this.props.byteOrder[1]],
                   this.props.config[this.props.byteOrder[2]],
                   this.props.config[this.props.byteOrder[3]],
-                ]).toString(Number(this.props.format || 10))
-              )
-            : byteArrayToLong([
-                this.props.config[this.props.byteOrder[0]],
-                this.props.config[this.props.byteOrder[1]],
-                this.props.config[this.props.byteOrder[2]],
-                this.props.config[this.props.byteOrder[3]],
-              ]).toString(Number(this.props.format || 10)),
-      }),
-      this.handleOnCopy
-    );
+                ]).toString(Number(this.props.format || 10)),
+        }),
+        this.handleOnCopy
+      );
+    }
   };
 
   setValue = (key) => (e, v) => {
@@ -186,15 +208,6 @@ class NotificationCalc extends React.Component {
   render() {
     return (
       <div>
-        {this.props.protocol !== "zigbee" && (
-          <div style={{ textAlign: "right" }}>
-            <Tooltip title="Decode a Value">
-              <IconButton onClick={this.openDecoder}>
-                <SettingsBackupRestoreIcon />
-              </IconButton>
-            </Tooltip>
-          </div>
-        )}
         <Typography gutterBottom>Color</Typography>
         <div
           className={this.props.classes.colorHelper}
@@ -279,54 +292,64 @@ class NotificationCalc extends React.Component {
             ))}
           </Select>
         </FormControl>
-        <TextField
-          style={{ marginTop: "60px" }}
-          value={
-            this.props.protocol === "zwave"
-              ? byteArrayToLong([
-                  this.props.config[this.props.byteOrder[0]],
-                  this.props.config[this.props.byteOrder[1]],
-                  this.props.config[this.props.byteOrder[2]],
-                  this.props.config[this.props.byteOrder[3]],
-                ]).toString(Number(this.props.format || 10))
-              : Object.values(this.props.config).join(",")
-          }
-          readOnly={true}
-          label={`Configuration Value${
-            this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
-              ? ` (Parameter ${
-                  this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
-                })`
-              : ""
-          }`}
-          fullWidth={true}
-          margin="normal"
-          variant="outlined"
-          inputRef={this.configValue}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Tooltip title="Copy to Clipboard">
-                  <IconButton edge="end" onClick={this.toggleMenu}>
-                    <CopyIcon />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  open={Boolean(this.state.anchor)}
-                  anchorEl={this.state.anchor}
-                  onClose={this.toggleMenu}
-                >
-                  <MenuItem onClick={this.handleCopyNumber}>
-                    Copy Value
-                  </MenuItem>
-                  <MenuItem onClick={this.handleCopyYAML}>
-                    Copy as YAML
-                  </MenuItem>
-                </Menu>
-              </InputAdornment>
-            ),
-          }}
-        />
+        <div className={this.props.classes.valueWrapper}>
+          <TextField
+            value={
+              this.props.protocol === "zwave"
+                ? byteArrayToLong([
+                    this.props.config[this.props.byteOrder[0]],
+                    this.props.config[this.props.byteOrder[1]],
+                    this.props.config[this.props.byteOrder[2]],
+                    this.props.config[this.props.byteOrder[3]],
+                  ]).toString(Number(this.props.format || 10))
+                : Object.values(this.props.config).join(",")
+            }
+            readOnly={true}
+            label={`Configuration Value${
+              this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
+                ? ` (Parameter ${
+                    this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
+                  })`
+                : ""
+            }`}
+            fullWidth={true}
+            margin="normal"
+            variant="outlined"
+            inputRef={this.configValue}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Tooltip title="Copy to Clipboard">
+                    <IconButton edge="end" onClick={this.toggleMenu}>
+                      <CopyIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    open={Boolean(this.state.anchor)}
+                    anchorEl={this.state.anchor}
+                    onClose={this.toggleMenu}
+                  >
+                    <MenuItem onClick={this.handleCopyNumber}>
+                      Copy Value
+                    </MenuItem>
+                    <MenuItem onClick={this.handleCopyYAML}>
+                      Copy as YAML
+                    </MenuItem>
+                  </Menu>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {this.props.protocol !== "zigbee" && (
+            <div style={{ textAlign: "right" }}>
+              <Tooltip title="Decode a Value">
+                <IconButton onClick={this.openDecoder}>
+                  <SettingsBackupRestoreIcon />
+                </IconButton>
+              </Tooltip>
+            </div>
+          )}
+        </div>
         <Snackbar
           anchorOrigin={{
             vertical: "bottom",

@@ -295,8 +295,8 @@ class App extends React.Component {
             <CssBaseline />
             <AppBar position="static">
               <Toolbar>
-                <Typography variant="h6" style={{ flexGrow: "1" }}>
-                  Inovelli Switch Toolbox
+                <Typography variant="h5" style={{ flexGrow: "1" }}>
+                  <strong>inovelli</strong> :: Switch Toolbox
                 </Typography>
                 <div style={{ flexShrink: "0", flexGrow: "0" }}>
                   <Tooltip title="Options">

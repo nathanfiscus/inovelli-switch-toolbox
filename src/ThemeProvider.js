@@ -1,7 +1,8 @@
 import React from "react";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
+import { MuiThemeProvider, createTheme } from "@material-ui/core";
 
-const primary = "#c21414";
+const primary = "#ed1c24";
+const DARK = "#0f1a20";
 
 class ThemeProvider extends React.Component {
   constructor(props) {
@@ -33,10 +34,20 @@ class ThemeProvider extends React.Component {
   }
 
   render() {
-    const THEME = createMuiTheme({
-      palette: {
-        type: this.state.themeType,
-        primary: { main: primary },
+    let palette = {
+      type: this.state.themeType,
+      primary: { main: primary },
+      background: { default: DARK, paper: "#343434" },
+    };
+
+    if (this.state.themeType !== "dark") {
+      delete palette.background;
+    }
+
+    const THEME = createTheme({
+      palette: palette,
+      typography: {
+        fontFamily: "Quicksand",
       },
     });
     return (

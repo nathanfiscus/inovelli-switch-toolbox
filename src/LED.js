@@ -39,6 +39,31 @@ const styles = (theme) => ({
       "50%": { bottom: "30%" },
       "100%": { bottom: "-65%" },
     },
+    "@keyframes aurora": {
+      "0%": { bottom: "80%", opacity: 0.3, boxShadow: "0px 0px 0px 0px" },
+      "45%": { opacity: 1 },
+      "55%": { opacity: 1 },
+      "80%": {
+        bottom: "-80%",
+        opacity: 0,
+        boxShadow: "0px 0px 0px 0px",
+      },
+      "100%": {
+        bottom: "-80%",
+        opacity: 0,
+        boxShadow: "0px 0px 0px 0px",
+      },
+    },
+    "@keyframes rising": {
+      "0%": { bottom: "-100%", boxShadow: "0px 0px 0px 0px" },
+      "50%": { bottom: "30%", boxShadow: "0px 0px 0px 0px" },
+      "100%": { bottom: "90%", boxShadow: "0px 0px 0px 0px" },
+    },
+    "@keyframes falling": {
+      "0%": { bottom: "90%", boxShadow: "0px 0px 0px 0px" },
+      "50%": { bottom: "30%", boxShadow: "0px 0px 0px 0px" },
+      "100%": { bottom: "-100%", boxShadow: "0px 0px 0px 0px" },
+    },
     "@keyframes smalltobig": {
       "0%": { height: "80%", top: "5%" },
       "50%": { height: "500%", top: "-200%" },
@@ -87,6 +112,11 @@ const styles = (theme) => ({
     animationName: "blink",
     animationTimingFunction: "step-start",
   },
+  mediumBlink: {
+    animationDuration: "1.4s",
+    animationName: "blink",
+    animationTimingFunction: "step-start",
+  },
   slowBlink: {
     animationDuration: "2s",
     animationName: "blink",
@@ -94,6 +124,60 @@ const styles = (theme) => ({
   },
   chase: {
     animationDuration: "2s",
+    animationName: "chase",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  aurora: {
+    animationDuration: "4s",
+    animationName: "aurora",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  risingFast: {
+    animationDuration: "1.2s",
+    animationName: "rising",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  risingMedium: {
+    animationDuration: "1.8s",
+    animationName: "rising",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  risingSlow: {
+    animationDuration: "2.2s",
+    animationName: "rising",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  fallingFast: {
+    animationDuration: "1.2s",
+    animationName: "falling",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  fallingMedium: {
+    animationDuration: "1.8s",
+    animationName: "falling",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  fallingSlow: {
+    animationDuration: "2.2s",
+    animationName: "falling",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  chaseFast: {
+    animationDuration: "1s",
+    animationName: "chase",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  chaseSlow: {
+    animationDuration: "3s",
     animationName: "chase",
     position: "absolute",
     animationTimingFunction: "linear",
@@ -130,8 +214,19 @@ const styles = (theme) => ({
     animationName: "blink_Shadow",
     animationTimingFunction: "step-start",
   },
+  mediumBlink_Shadow: {
+    animationDuration: "1.4s",
+    animationName: "blink_Shadow",
+    animationTimingFunction: "step-start",
+  },
   chase_Shadow: {
     animationDuration: "2s",
+    animationName: "chase_Shadow",
+    position: "absolute",
+    animationTimingFunction: "linear",
+  },
+  aurora_Shadow: {
+    animationDuration: "4s",
     animationName: "chase_Shadow",
     position: "absolute",
     animationTimingFunction: "linear",
@@ -188,6 +283,78 @@ class LED extends React.Component {
         effectStyles.boxShadow = "unset";
         effectStyles.zIndex = 0;
         break;
+      case "Aurora":
+        effectCSS += ` ${this.props.classes.aurora}`;
+        effectCSS_Shadow += ` ${this.props.classes.aurora_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
+      case "Fast Rising":
+        effectCSS += ` ${this.props.classes.risingFast}`;
+        effectCSS_Shadow += ` ${this.props.classes.aurora_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
+      case "Medium Rising":
+        effectCSS += ` ${this.props.classes.risingMedium}`;
+        effectCSS_Shadow += ` ${this.props.classes.aurora_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
+      case "Slow Rising":
+        effectCSS += ` ${this.props.classes.risingSlow}`;
+        effectCSS_Shadow += ` ${this.props.classes.aurora_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
+      case "Fast Falling":
+        effectCSS += ` ${this.props.classes.fallingFast}`;
+        effectCSS_Shadow += ` ${this.props.classes.aurora_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
+      case "Medium Falling":
+        effectCSS += ` ${this.props.classes.fallingMedium}`;
+        effectCSS_Shadow += ` ${this.props.classes.aurora_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
+      case "Slow Falling":
+        effectCSS += ` ${this.props.classes.fallingSlow}`;
+        effectCSS_Shadow += ` ${this.props.classes.aurora_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
+      case "Fast Chase":
+        effectCSS += ` ${this.props.classes.chaseFast}`;
+        effectCSS_Shadow += ` ${this.props.classes.chase_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
+      case "Slow Chase":
+        effectCSS += ` ${this.props.classes.chaseSlow}`;
+        effectCSS_Shadow += ` ${this.props.classes.chase_Shadow}`;
+        effectStyles.backgroundImage = `linear-gradient(transparent,${SELECTED_COLOR},transparent)`;
+        effectStyles.backgroundColor = "unset";
+        effectStyles.boxShadow = "unset";
+        effectStyles.zIndex = 0;
+        break;
       case "Small to Big":
         effectCSS += ` ${this.props.classes.smalltobig}`;
         effectCSS_Shadow += ` ${this.props.classes.chase_Shadow}`;
@@ -204,6 +371,10 @@ class LED extends React.Component {
         effectStyles.boxShadow = "unset";
         effectStyles.zIndex = 0;
         effectStyles.height = "75%";
+        break;
+      case "Medium Blink":
+        effectCSS += ` ${this.props.classes.mediumBlink}`;
+        effectCSS_Shadow += ` ${this.props.classes.mediumBlink_Shadow}`;
         break;
       case "Solid":
         break;
