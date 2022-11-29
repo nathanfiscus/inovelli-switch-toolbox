@@ -8,7 +8,7 @@ export default {
       name: "",
       pos: {
         height: "227px",
-        bottom: "148px",
+        bottom: "146px",
         right: "109px",
       },
       parameters: {

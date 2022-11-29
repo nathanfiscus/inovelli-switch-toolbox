@@ -5,7 +5,7 @@ export default {
   leds: [
     {
       id: "led-0",
-      name: "Light LED",
+      name: "Light",
       pos: {
         top: "146px",
         right: "108px",
@@ -31,7 +31,7 @@ export default {
     },
     {
       id: "led-1",
-      name: "Fan LED",
+      name: "Fan",
       pos: {
         bottom: "146px",
         right: "108px",

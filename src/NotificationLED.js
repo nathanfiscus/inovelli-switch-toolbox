@@ -1,5 +1,5 @@
 import React from "react";
-import LED from "./LED";
+import LED from "./LEDStrip";
 import { withStyles } from "@material-ui/core";
 
 const styles = (theme) => ({
@@ -12,10 +12,12 @@ const styles = (theme) => ({
 class NotificationLED extends React.Component {
   render() {
     const { type, color, effect, level, effects, range, style } = this.props;
-
+    console.log(this.props);
     return (
       <div style={style}>
         <LED
+          width={style.width || "100%"}
+          height={style.height}
           color={color}
           effect={effect}
           level={level}

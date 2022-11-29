@@ -8,7 +8,7 @@ export default {
       name: "",
       pos: {
         height: "227px",
-        bottom: "148px",
+        bottom: "146px",
         right: "108px",
       },
       parameters: {
@@ -31,12 +31,18 @@ export default {
     },
   ],
   effects: [
-    { name: "Off (Notification Cleared)", value: 0 },
-    { name: "Solid", value: 1 },
-    { name: "Chase", value: 2, styles: { height: "300px" } },
-    { name: "Fast Blink", value: 3 },
-    { name: "Slow Blink", value: 4 },
-    { name: "Pulse", value: 5 },
+    { name: "Off (Notification Cleared)", value: 0, animation: "off" },
+    { name: "Solid", value: 1, animation: "solid" },
+    {
+      name: "Chase",
+      animation: "chase",
+      speed: 225,
+      value: 2,
+      styles: { height: "300px" },
+    },
+    { name: "Fast Blink", animation: "blink", speed: 400, value: 3 },
+    { name: "Slow Blink", animation: "blink", speed: 800, value: 4 },
+    { name: "Pulse", animation: "pulse", speed: 400, value: 5 },
   ],
   scenes: Scenes,
 };

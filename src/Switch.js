@@ -89,10 +89,12 @@ class Switch extends React.Component {
               ...led.pos,
             }}
             range={led.colorRange}
-            color={this.props.configs[index].color}
-            effect={this.props.configs[index].effect}
+            color={this.props.configs[index].map((l) => l.color)}
+            effect={this.props.configs[index].map((l) =>
+              this.props.effects.find((e) => e.value === l.effect)
+            )}
             effects={this.props.effects}
-            level={this.props.configs[index].level}
+            level={this.props.configs[index].map((l) => l.level)}
           />
         ))}
       </div>
