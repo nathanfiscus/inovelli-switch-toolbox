@@ -1,19 +1,19 @@
 {
-  "name": "inovelli-notification-util",
-  "homepage": "https://nathanfiscus.github.io/inovelli-notification-calc",
-  "repository": "https://github.com/nathanfiscus/inovelli-notification-calc",
+  "name": "inovelli-switch-toolbox",
+  "homepage": "https://nathanfiscus.github.io/inovelli-switch-toolbox",
+  "repository": "https://github.com/nathanfiscus/inovelli-switch-toolbox",
   "version": "4.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "clipboard-polyfill": "^2.8.6",
-    "gh-pages": "^3.2.3",
+    "gh-pages": "^4.0.0",
     "gradient2": "^1.0.5",
     "json-to-pretty-yaml": "^1.2.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^5.0.0"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

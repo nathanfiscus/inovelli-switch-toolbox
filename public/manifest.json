@@ -1,6 +1,6 @@
 {
   "short_name": "INC",
-  "name": "Inovelli LED Notification Calculator",
+  "name": "Inovelli Switch Toolbox",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,7 +18,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/inovelli-notification-calc/",
+  "start_url": "/inovelli-switch-toolbox/",
   "display": "standalone",
   "theme_color": "#c21414",
   "background_color": "#ffffff"
