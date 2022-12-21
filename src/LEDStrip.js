@@ -142,6 +142,14 @@ class LED2 extends React.Component {
     return animation[step][led];
   }
 
+  color(index) {
+    if (this.props.range[0] === 0 && this.props.color[index] === 255) {
+      return [255, 255, 255];
+    } else {
+      return LED_COLORS[this.props.color[index]].color;
+    }
+  }
+
   render() {
     return (
       <div
@@ -154,7 +162,7 @@ class LED2 extends React.Component {
       >
         <div className={this.props.classes.ledstrip} ref={this.ledStrip}>
           <WS2812
-            color={LED_COLORS[this.props.color[0]].color}
+            color={this.color(0)}
             level={
               this.safeStep(
                 Animations[this.props.effect[0].animation],
@@ -166,7 +174,7 @@ class LED2 extends React.Component {
             className={this.props.classes.diffuse}
           />
           <WS2812
-            color={LED_COLORS[this.props.color[1]].color}
+            color={this.color(1)}
             level={
               this.safeStep(
                 Animations[this.props.effect[1].animation],
@@ -178,7 +186,7 @@ class LED2 extends React.Component {
             className={this.props.classes.diffuse}
           />
           <WS2812
-            color={LED_COLORS[this.props.color[2]].color}
+            color={this.color(2)}
             level={
               this.safeStep(
                 Animations[this.props.effect[2].animation],
@@ -190,7 +198,7 @@ class LED2 extends React.Component {
             className={this.props.classes.diffuse}
           />
           <WS2812
-            color={LED_COLORS[this.props.color[3]].color}
+            color={this.color(3)}
             level={
               this.safeStep(
                 Animations[this.props.effect[3].animation],
@@ -202,7 +210,7 @@ class LED2 extends React.Component {
             className={this.props.classes.diffuse}
           />
           <WS2812
-            color={LED_COLORS[this.props.color[4]].color}
+            color={this.color(4)}
             level={
               this.safeStep(
                 Animations[this.props.effect[4].animation],
@@ -214,7 +222,7 @@ class LED2 extends React.Component {
             className={this.props.classes.diffuse}
           />
           <WS2812
-            color={LED_COLORS[this.props.color[5]].color}
+            color={this.color(5)}
             level={
               this.safeStep(
                 Animations[this.props.effect[5].animation],
@@ -226,7 +234,7 @@ class LED2 extends React.Component {
             className={this.props.classes.diffuse}
           />
           <WS2812
-            color={LED_COLORS[this.props.color[6]].color}
+            color={this.color(6)}
             level={
               this.safeStep(
                 Animations[this.props.effect[6].animation],

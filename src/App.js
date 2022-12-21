@@ -377,7 +377,7 @@ class App extends React.Component {
                         onChange={this.setSwitchType}
                       >
                         {SwitchDefinitions.map((sw, index) => (
-                          <MenuItem key={sw.displayName} value={index}>
+                          <MenuItem key={sw.id} value={index}>
                             <ListItemText
                               primary={sw.displayName}
                               secondary={
