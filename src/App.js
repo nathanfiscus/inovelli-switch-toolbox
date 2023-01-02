@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   CssBaseline,
   withStyles,
@@ -31,29 +30,6 @@ import TuneIcon from "@material-ui/icons/Tune";
 import OptionsDialog from "./Options";
 import SwitchDefinitions from "./SwitchDefinitions";
 import CPUIcon from "./icons/CPU.js";
-
-let Gradient = require("gradient2");
-let gradient = new Gradient({
-  colors: [
-    "rgb(255,0,0)",
-    "rgb(255,125,0)",
-    "rgb(255,255,0)",
-    "rgb(125,255,0)",
-    "rgb(0,255,0)",
-    "rgb(0,255,125)",
-    "rgb(0,255,255)",
-    "rgb(0,125,255)",
-    "rgb(0,0,255)",
-    "rgb(125,0,255)",
-    "rgb(255,0,255)",
-    "rgb(255,0,125)",
-    "rgb(255,0,0)",
-  ],
-  steps: 256,
-  model: "rgb",
-});
-
-const LED_COLORS = gradient.toArray("hex");
 
 const styles = (theme) => ({
   switchWrapper: {
@@ -104,18 +80,18 @@ const styles = (theme) => ({
 
 //Might Move to this calc in the future. More straight forward
 
-const longToByteArray = function (/*long*/ long) {
-  // we want to represent the input as a 8-bytes array
-  var byteArray = [0, 0, 0, 0];
+// const longToByteArray = function (/*long*/ long) {
+//   // we want to represent the input as a 8-bytes array
+//   var byteArray = [0, 0, 0, 0];
 
-  for (var index = 0; index < byteArray.length; index++) {
-    var byte = long & 0xff;
-    byteArray[index] = byte;
-    long = (long - byte) / 256;
-  }
+//   for (var index = 0; index < byteArray.length; index++) {
+//     var byte = long & 0xff;
+//     byteArray[index] = byte;
+//     long = (long - byte) / 256;
+//   }
 
-  return byteArray;
-};
+//   return byteArray;
+// };
 
 // const byteArrayToLong = function(/*byte[]*/ byteArray) {
 //   var value = 0;
@@ -139,7 +115,6 @@ class App extends React.Component {
       type: 0,
       tab: 1,
       selectedLED: 0,
-      selectedLEDLight: "all",
       highlight: null,
       ledConfigs: JSON.parse(
         JSON.stringify(

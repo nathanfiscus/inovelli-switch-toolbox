@@ -56,7 +56,7 @@ class Switch extends React.Component {
   render() {
     return (
       <div style={{ position: "relative" }}>
-        <img src={lzw30sn} style={{ width: "100%" }} />
+        <img src={lzw30sn} alt="Light Switch" style={{ width: "100%" }} />
         {this.props.images.map((img) => (
           <img
             key={img.id}

@@ -90,7 +90,7 @@ class LED2 extends React.Component {
         for (let i = 1; i <= 7; i++) {
           if (
             Date.now() - (lastState[`animationStartTimeLED${i}`] || 0) >=
-            (this.props.effect[i - 1].speed || 0)
+            (this.props.effect[i - 1]?.speed || 0)
           ) {
             nextState = {
               ...nextState,
@@ -101,7 +101,8 @@ class LED2 extends React.Component {
           }
           if (
             nextState[`animationStepLED${i}`] >
-            Animations[this.props.effect[i - 1].animation].length - 1
+            Animations[this.props.effect[i - 1]?.animation || "solid"].length -
+              1
           ) {
             nextState[`animationStepLED${i}`] = 0;
           }
@@ -136,6 +137,9 @@ class LED2 extends React.Component {
   }
 
   safeStep(animation, step, led) {
+    if (!animation || animation.length < 1) {
+      return 1;
+    }
     if (!step || step >= animation.length) {
       return animation[0][led];
     }
@@ -165,7 +169,7 @@ class LED2 extends React.Component {
             color={this.color(0)}
             level={
               this.safeStep(
-                Animations[this.props.effect[0].animation],
+                Animations[this.props.effect[0]?.animation || "solid"],
                 this.state.animationStepLED1,
                 0
               ) *
@@ -177,7 +181,7 @@ class LED2 extends React.Component {
             color={this.color(1)}
             level={
               this.safeStep(
-                Animations[this.props.effect[1].animation],
+                Animations[this.props.effect[1]?.animation || "solid"],
                 this.state.animationStepLED2,
                 1
               ) *
@@ -189,7 +193,7 @@ class LED2 extends React.Component {
             color={this.color(2)}
             level={
               this.safeStep(
-                Animations[this.props.effect[2].animation],
+                Animations[this.props.effect[2]?.animation || "solid"],
                 this.state.animationStepLED3,
                 2
               ) *
@@ -201,7 +205,7 @@ class LED2 extends React.Component {
             color={this.color(3)}
             level={
               this.safeStep(
-                Animations[this.props.effect[3].animation],
+                Animations[this.props.effect[3]?.animation || "solid"],
                 this.state.animationStepLED4,
                 3
               ) *
@@ -213,7 +217,7 @@ class LED2 extends React.Component {
             color={this.color(4)}
             level={
               this.safeStep(
-                Animations[this.props.effect[4].animation],
+                Animations[this.props.effect[4]?.animation || "solid"],
                 this.state.animationStepLED5,
                 4
               ) *
@@ -225,7 +229,7 @@ class LED2 extends React.Component {
             color={this.color(5)}
             level={
               this.safeStep(
-                Animations[this.props.effect[5].animation],
+                Animations[this.props.effect[5]?.animation || "solid"],
                 this.state.animationStepLED6,
                 5
               ) *
@@ -237,7 +241,7 @@ class LED2 extends React.Component {
             color={this.color(6)}
             level={
               this.safeStep(
-                Animations[this.props.effect[6].animation],
+                Animations[this.props.effect[6]?.animation || "solid"],
                 this.state.animationStepLED7,
                 6
               ) *

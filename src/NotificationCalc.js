@@ -11,7 +11,6 @@ import {
   TextField,
   InputAdornment,
   IconButton,
-  SvgIcon,
   Grid,
   Tooltip,
   Menu,

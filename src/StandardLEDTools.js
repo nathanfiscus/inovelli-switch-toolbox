@@ -153,7 +153,6 @@ class StandardLEDTools extends React.PureComponent {
         <Slider
           defaultValue={1}
           aria-labelledby="discrete-slider"
-          valueLabelDisplay="auto"
           step={1}
           min={this.props.colorRange[0]}
           max={this.props.colorRange[1]}

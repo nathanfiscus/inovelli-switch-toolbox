@@ -48,7 +48,7 @@ export default {
       name: "Aurora",
       value: 8,
       animation: "aurora",
-      styles: { height: "300px" },
+      speed: 400,
     },
     {
       name: "Slow Falling",
