@@ -31,11 +31,17 @@ export default {
     },
   ],
   effects: [
-    { name: "Off (Notification Cleared)", value: "0" },
-    { name: "Solid", value: "1" },
-    { name: "Fast Blink", value: "2" },
-    { name: "Slow Blink", value: "3" },
-    { name: "Pulse", value: "4" },
+    { name: "Off (Notification Cleared)", value: 0, animation: "off" },
+    { name: "Solid", value: 1, animation: "solid" },
+    {
+      name: "Chase",
+      value: 2,
+      animation: "chase",
+      speed: 225,
+    },
+    { name: "Fast Blink", value: 3, animation: "blink", speed: 400 },
+    { name: "Slow Blink", value: 4, animation: "blink", speed: 800 },
+    { name: "Pulse", value: 5, animation: "pulse", speed: 400 },
   ],
   scenes: Scenes,
 };

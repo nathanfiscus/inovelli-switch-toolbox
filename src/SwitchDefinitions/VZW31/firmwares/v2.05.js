@@ -97,7 +97,7 @@ export default {
       name: "Fast Chase",
       value: 17,
       animation: "chase",
-      speed: 400,
+      speed: 150,
     },
     { name: "Clear Effect", value: 255, animation: "clear" },
   ],

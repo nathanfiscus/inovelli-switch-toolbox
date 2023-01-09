@@ -35,14 +35,13 @@ export default {
     { name: "Solid", value: 1, animation: "solid" },
     {
       name: "Chase",
+      value: 2,
       animation: "chase",
       speed: 225,
-      value: 2,
-      styles: { height: "300px" },
     },
-    { name: "Fast Blink", animation: "blink", speed: 400, value: 3 },
-    { name: "Slow Blink", animation: "blink", speed: 800, value: 4 },
-    { name: "Pulse", animation: "pulse", speed: 400, value: 5 },
+    { name: "Fast Blink", value: 3, animation: "blink", speed: 400 },
+    { name: "Slow Blink", value: 4, animation: "blink", speed: 800 },
+    { name: "Pulse", value: 5, animation: "pulse", speed: 400 },
   ],
   scenes: Scenes,
 };

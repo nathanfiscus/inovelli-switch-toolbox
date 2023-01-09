@@ -42,7 +42,7 @@ const styles = (theme) => ({
   },
 
   diffuse: {
-    filter: "blur(5px)",
+    filter: "blur(10px)",
   },
   topDiffuse: {
     filter: "brightness(100%)",
