@@ -324,7 +324,7 @@ class App extends React.Component {
                   }
                   paddles={SwitchDefinitions[this.state.type].paddles}
                   configs={
-                    this.state.tab !== 0
+                    this.state.tab !== 1
                       ? this.state.notificationConfigs
                       : this.state.ledConfigs
                   }
