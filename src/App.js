@@ -113,7 +113,7 @@ class App extends React.Component {
       aboutDialogOpen: false,
       optionsDialogOpen: false,
       type: 0,
-      tab: 1,
+      tab: 0,
       selectedLED: 0,
       highlight: null,
       ledConfigs: JSON.parse(
@@ -443,8 +443,8 @@ class App extends React.Component {
                     variant="fullWidth"
                     centered
                   >
-                    <Tab label="LED" />
                     <Tab label="Notifications" />
+                    <Tab label="LED" />
                     {/* <Tab label="Scenes" /> */}
                   </Tabs>
                 </div>
