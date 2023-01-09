@@ -449,7 +449,7 @@ class App extends React.Component {
                   </Tabs>
                 </div>
 
-                {this.state.tab === 1 && (
+                {this.state.tab === 0 && (
                   <NotificationCalc
                     effects={
                       SwitchDefinitions[this.state.type].firmwares[
@@ -495,7 +495,7 @@ class App extends React.Component {
                     }
                   />
                 )}
-                {this.state.tab === 0 && (
+                {this.state.tab === 1 && (
                   <StandardLEDTools
                     parameters={
                       SwitchDefinitions[this.state.type].firmwares[
