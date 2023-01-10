@@ -60,7 +60,6 @@ class StandardLEDTools extends React.PureComponent {
   }
 
   setValue = (key, attr) => (e, v) => {
-    console.log(key, attr, v);
     this.props.onChange(key, attr, v);
   };
 

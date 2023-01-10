@@ -385,7 +385,7 @@ class LED extends React.Component {
         delete OUTER_STYLE.boxShadow;
         break;
       default:
-        console.log(
+        console.info(
           "Effect " + effect.name + " not supported. Defaulting to Solid."
         );
         break;

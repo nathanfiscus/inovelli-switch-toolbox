@@ -169,7 +169,6 @@ class App extends React.Component {
   };
 
   setConfigValue = (key, attr, v) => {
-    console.log(key, attr, v);
     this.setState((lastState) => {
       let config = lastState[key];
       if (attr === "all") {
