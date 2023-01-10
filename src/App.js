@@ -76,6 +76,9 @@ const styles = (theme) => ({
   switchPicker: {
     marginBottom: theme.spacing(3),
   },
+  subheader: {
+    color: "#ed1c24",
+  },
 });
 
 //Might Move to this calc in the future. More straight forward
@@ -351,16 +354,36 @@ class App extends React.Component {
                         value={this.state.type}
                         onChange={this.setSwitchType}
                       >
-                        {SwitchDefinitions.map((sw, index) => (
-                          <MenuItem key={sw.id} value={index}>
-                            <ListItemText
-                              primary={sw.displayName}
-                              secondary={
-                                sw.protocol === "zwave" ? "Z-Wave" : "Zigbee"
-                              }
-                            />
-                          </MenuItem>
-                        ))}
+                        <ListSubheader className={this.props.classes.subheader}>
+                          Z-Wave
+                        </ListSubheader>
+                        {SwitchDefinitions.reduce((arr, sw, index) => {
+                          if (sw.protocol === "zwave")
+                            arr.push(
+                              <MenuItem key={sw.id} value={index}>
+                                <ListItemText
+                                  primary={sw.displayName}
+                                  secondary={sw.model}
+                                />
+                              </MenuItem>
+                            );
+                          return arr;
+                        }, [])}
+                        <ListSubheader className={this.props.classes.subheader}>
+                          Zigbee
+                        </ListSubheader>
+                        {SwitchDefinitions.reduce((arr, sw, index) => {
+                          if (sw.protocol !== "zwave")
+                            arr.push(
+                              <MenuItem key={sw.id} value={index}>
+                                <ListItemText
+                                  primary={sw.displayName}
+                                  secondary={sw.model}
+                                />
+                              </MenuItem>
+                            );
+                          return arr;
+                        }, [])}
                       </Select>
                     </FormControl>
 

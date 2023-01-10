@@ -3,6 +3,7 @@ import v205 from "./firmwares/v2.05";
 export default {
   protocol: "zigbee",
   displayName: "Fan Switch",
+  model: "VZM35",
   id: "zig-fan",
   paddles: [
     {

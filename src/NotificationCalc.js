@@ -16,7 +16,6 @@ import {
   Menu,
   Snackbar,
 } from "@material-ui/core";
-import { withTheme } from "@material-ui/core/styles";
 import { withMobileDialog } from "@material-ui/core";
 import Brightness0 from "@material-ui/icons/Brightness2";
 import Brightness7 from "@material-ui/icons/Brightness7";
@@ -373,4 +372,4 @@ class NotificationCalc extends React.Component {
   }
 }
 
-export default withStyles(styles)(withMobileDialog()(NotificationCalc));
+export default withStyles(styles)(NotificationCalc);

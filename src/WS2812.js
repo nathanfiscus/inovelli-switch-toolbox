@@ -9,7 +9,7 @@ class WS2812 extends React.Component {
           background: `rgba(${this.props.color.join()},${
             this.props.level || 0
           })`,
-          transition: "all 0.3s",
+          transition: "all 0.2s linear 0s",
         }}
       />
     );

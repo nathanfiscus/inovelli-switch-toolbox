@@ -3,6 +3,7 @@ import v205 from "./firmwares/v2.05";
 export default {
   protocol: "zigbee",
   displayName: "On\\Off + Dimmer Switch",
+  model: "VZM31-SN",
   id: "zig-dimmer",
   paddles: [
     {

@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 import WS2812 from "./WS2812";
 import Animations from "./animations";
+import zIndex from "@material-ui/core/styles/zIndex";
 let Gradient = require("gradient2");
 
 let gradient = new Gradient({
@@ -157,98 +158,196 @@ class LED2 extends React.Component {
   render() {
     return (
       <div
-        className={this.props.classes.topDiffuse}
         style={{
           width: "10px",
           height: this.props.height,
           backgroundColor: "#aaa",
+          position: "relative",
         }}
       >
-        <div className={this.props.classes.ledstrip} ref={this.ledStrip}>
-          <WS2812
-            color={this.color(0)}
-            level={
-              this.safeStep(
-                Animations[this.props.effect[0]?.animation || "solid"],
-                this.state.animationStepLED1,
-                0
-              ) *
-              (this.props.level[0] / 10)
-            }
-            className={this.props.classes.diffuse}
-          />
-          <WS2812
-            color={this.color(1)}
-            level={
-              this.safeStep(
-                Animations[this.props.effect[1]?.animation || "solid"],
-                this.state.animationStepLED2,
-                1
-              ) *
-              (this.props.level[1] / 10)
-            }
-            className={this.props.classes.diffuse}
-          />
-          <WS2812
-            color={this.color(2)}
-            level={
-              this.safeStep(
-                Animations[this.props.effect[2]?.animation || "solid"],
-                this.state.animationStepLED3,
-                2
-              ) *
-              (this.props.level[2] / 10)
-            }
-            className={this.props.classes.diffuse}
-          />
-          <WS2812
-            color={this.color(3)}
-            level={
-              this.safeStep(
-                Animations[this.props.effect[3]?.animation || "solid"],
-                this.state.animationStepLED4,
-                3
-              ) *
-              (this.props.level[3] / 10)
-            }
-            className={this.props.classes.diffuse}
-          />
-          <WS2812
-            color={this.color(4)}
-            level={
-              this.safeStep(
-                Animations[this.props.effect[4]?.animation || "solid"],
-                this.state.animationStepLED5,
-                4
-              ) *
-              (this.props.level[4] / 10)
-            }
-            className={this.props.classes.diffuse}
-          />
-          <WS2812
-            color={this.color(5)}
-            level={
-              this.safeStep(
-                Animations[this.props.effect[5]?.animation || "solid"],
-                this.state.animationStepLED6,
-                5
-              ) *
-              (this.props.level[5] / 10)
-            }
-            className={this.props.classes.diffuse}
-          />
-          <WS2812
-            color={this.color(6)}
-            level={
-              this.safeStep(
-                Animations[this.props.effect[6]?.animation || "solid"],
-                this.state.animationStepLED7,
-                6
-              ) *
-              (this.props.level[6] / 10)
-            }
-            className={this.props.classes.diffuse}
-          />
+        <div
+          className={this.props.classes.topDiffuse}
+          style={{
+            width: "10px",
+            height: this.props.height,
+            backgroundColor: "#aaa",
+            position: "absolute",
+            zIndex: "2",
+          }}
+        >
+          <div className={this.props.classes.ledstrip} ref={this.ledStrip}>
+            <WS2812
+              color={this.color(0)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[0]?.animation || "solid"],
+                  this.state.animationStepLED1,
+                  0
+                ) *
+                (this.props.level[0] / 10)
+              }
+              className={this.props.classes.diffuse}
+            />
+            <WS2812
+              color={this.color(1)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[1]?.animation || "solid"],
+                  this.state.animationStepLED2,
+                  1
+                ) *
+                (this.props.level[1] / 10)
+              }
+              className={this.props.classes.diffuse}
+            />
+            <WS2812
+              color={this.color(2)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[2]?.animation || "solid"],
+                  this.state.animationStepLED3,
+                  2
+                ) *
+                (this.props.level[2] / 10)
+              }
+              className={this.props.classes.diffuse}
+            />
+            <WS2812
+              color={this.color(3)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[3]?.animation || "solid"],
+                  this.state.animationStepLED4,
+                  3
+                ) *
+                (this.props.level[3] / 10)
+              }
+              className={this.props.classes.diffuse}
+            />
+            <WS2812
+              color={this.color(4)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[4]?.animation || "solid"],
+                  this.state.animationStepLED5,
+                  4
+                ) *
+                (this.props.level[4] / 10)
+              }
+              className={this.props.classes.diffuse}
+            />
+            <WS2812
+              color={this.color(5)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[5]?.animation || "solid"],
+                  this.state.animationStepLED6,
+                  5
+                ) *
+                (this.props.level[5] / 10)
+              }
+              className={this.props.classes.diffuse}
+            />
+            <WS2812
+              color={this.color(6)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[6]?.animation || "solid"],
+                  this.state.animationStepLED7,
+                  6
+                ) *
+                (this.props.level[6] / 10)
+              }
+              className={this.props.classes.diffuse}
+            />
+          </div>
+        </div>
+        <div
+          style={{
+            width: "10px",
+            height: this.props.height,
+            backgroundColor: "#aaa",
+          }}
+        >
+          <div className={this.props.classes.ledstrip} ref={this.ledStrip}>
+            <WS2812
+              color={this.color(0)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[0]?.animation || "solid"],
+                  this.state.animationStepLED1,
+                  0
+                ) *
+                (this.props.level[0] / 10)
+              }
+            />
+            <WS2812
+              color={this.color(1)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[1]?.animation || "solid"],
+                  this.state.animationStepLED2,
+                  1
+                ) *
+                (this.props.level[1] / 10)
+              }
+            />
+            <WS2812
+              color={this.color(2)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[2]?.animation || "solid"],
+                  this.state.animationStepLED3,
+                  2
+                ) *
+                (this.props.level[2] / 10)
+              }
+            />
+            <WS2812
+              color={this.color(3)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[3]?.animation || "solid"],
+                  this.state.animationStepLED4,
+                  3
+                ) *
+                (this.props.level[3] / 10)
+              }
+            />
+            <WS2812
+              color={this.color(4)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[4]?.animation || "solid"],
+                  this.state.animationStepLED5,
+                  4
+                ) *
+                (this.props.level[4] / 10)
+              }
+            />
+            <WS2812
+              color={this.color(5)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[5]?.animation || "solid"],
+                  this.state.animationStepLED6,
+                  5
+                ) *
+                (this.props.level[5] / 10)
+              }
+            />
+            <WS2812
+              color={this.color(6)}
+              level={
+                this.safeStep(
+                  Animations[this.props.effect[6]?.animation || "solid"],
+                  this.state.animationStepLED7,
+                  6
+                ) *
+                (this.props.level[6] / 10)
+              }
+            />
+          </div>
         </div>
       </div>
     );

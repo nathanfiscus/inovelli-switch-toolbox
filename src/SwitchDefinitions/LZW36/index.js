@@ -5,6 +5,7 @@ export default {
   protocol: "zwave",
   id: "fanlightcombo",
   displayName: "Fan\\Light Combo Dimmer",
+  model: "VZM36",
   paddles: [
     {
       id: "light",

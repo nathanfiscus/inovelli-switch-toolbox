@@ -4,6 +4,7 @@ import v148 from "./firmwares/v1.48";
 export default {
   protocol: "zwave",
   displayName: "Dimmer Switch",
+  model: "LZW31-SN",
   id: "dimmer",
   paddles: [
     {
