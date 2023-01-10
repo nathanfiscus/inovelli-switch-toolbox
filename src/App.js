@@ -425,13 +425,13 @@ class App extends React.Component {
                         onChange={this.setSelectedLEDLight}
                       >
                         <MenuItem value={"all"}>All</MenuItem>
-                        <MenuItem value={0}>1</MenuItem>
-                        <MenuItem value={1}>2</MenuItem>
-                        <MenuItem value={2}>3</MenuItem>
+                        <MenuItem value={0}>7</MenuItem>
+                        <MenuItem value={1}>6</MenuItem>
+                        <MenuItem value={2}>5</MenuItem>
                         <MenuItem value={3}>4</MenuItem>
-                        <MenuItem value={4}>5</MenuItem>
-                        <MenuItem value={5}>6</MenuItem>
-                        <MenuItem value={6}>7</MenuItem>
+                        <MenuItem value={4}>3</MenuItem>
+                        <MenuItem value={5}>2</MenuItem>
+                        <MenuItem value={6}>1</MenuItem>
                       </Select>
                     </FormControl>
                   )}
