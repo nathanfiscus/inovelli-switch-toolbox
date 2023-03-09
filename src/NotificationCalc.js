@@ -107,22 +107,7 @@ class NotificationCalc extends React.Component {
 
   handleCopyNumber = () => {
     this.setState({ anchor: null });
-    if (this.props.protocol !== "zwave") {
-      copyToClipboard(
-        Object.values(this.props.config).join(","),
-        this.handleOnCopy
-      );
-    } else {
-      copyToClipboard(
-        byteArrayToLong([
-          this.props.config[this.props.byteOrder[0]],
-          this.props.config[this.props.byteOrder[1]],
-          this.props.config[this.props.byteOrder[2]],
-          this.props.config[this.props.byteOrder[3]],
-        ]).toString(Number(this.props.format || 10)),
-        this.handleOnCopy
-      );
-    }
+    copyToClipboard(this.configurationValue, this.handleOnCopy);
   };
 
   handleCopyYAML = () => {
@@ -135,7 +120,13 @@ class NotificationCalc extends React.Component {
     } else {
       copyToClipboard(
         YAML.stringify({
-          parameter: this.props.parameters[CONFIG_PARAMETER.LED_EFFECT],
+          parameter:
+            typeof this.props.parameters[CONFIG_PARAMETER.LED_EFFECT] ===
+            "number"
+              ? this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
+              : this.props.parameters[CONFIG_PARAMETER.LED_EFFECT][
+                  this.props.selectedLED
+                ],
           value:
             this.props.format === "10"
               ? parseInt(
@@ -204,6 +195,46 @@ class NotificationCalc extends React.Component {
   handleSnackbarClose = () => {
     this.setState({ snackbarOpen: false });
   };
+
+  get configurationValue() {
+    // let byteArr = [
+    //   this.props.config[this.props.byteOrder[0]],
+    //   this.props.config[this.props.byteOrder[1]],
+    //   this.props.config[this.props.byteOrder[2]],
+    //   this.props.config[this.props.byteOrder[3]],
+    // ];
+
+    // byteArr[this.props.byteOrder.find(b=>b === "effect")] = this.props.effect
+
+    let value;
+
+    if (this.props.protocol === "zwave") {
+      value = byteArrayToLong([
+        this.props.config[this.props.byteOrder[0]],
+        this.props.config[this.props.byteOrder[1]],
+        this.props.config[this.props.byteOrder[2]],
+        this.props.config[this.props.byteOrder[3]],
+      ]).toString(Number(this.props.format || 10));
+    } else {
+      let arr = Object.values(this.props.config);
+      if (this.props.selectedLED !== "all") {
+        arr = [6 - this.props.selectedLED, ...arr];
+      }
+
+      value = arr.join(",");
+    }
+    return value;
+  }
+
+  configurationNumber(param) {
+    return this.props.parameters[param]
+      ? ` (Parameter ${
+          typeof this.props.parameters[param] === "number"
+            ? this.props.parameters[param]
+            : this.props.parameters[param][this.props.selectedLED]
+        })`
+      : "";
+  }
 
   render() {
     return (
@@ -288,30 +319,19 @@ class NotificationCalc extends React.Component {
             onChange={this.setValue("effect")}
           >
             {this.props.effects.map((effect) => (
-              <MenuItem value={effect.value}>{effect.name}</MenuItem>
+              <MenuItem key={effect.value} value={effect.value}>
+                {effect.name}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
         <div className={this.props.classes.valueWrapper}>
           <TextField
-            value={
-              this.props.protocol === "zwave"
-                ? byteArrayToLong([
-                    this.props.config[this.props.byteOrder[0]],
-                    this.props.config[this.props.byteOrder[1]],
-                    this.props.config[this.props.byteOrder[2]],
-                    this.props.config[this.props.byteOrder[3]],
-                  ]).toString(Number(this.props.format || 10))
-                : Object.values(this.props.config).join(",")
-            }
+            value={this.configurationValue}
             readOnly={true}
-            label={`Configuration Value${
-              this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
-                ? ` (Parameter ${
-                    this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
-                  })`
-                : ""
-            }`}
+            label={`Configuration Value${this.configurationNumber(
+              CONFIG_PARAMETER.LED_EFFECT
+            )}`}
             fullWidth={true}
             margin="normal"
             variant="outlined"

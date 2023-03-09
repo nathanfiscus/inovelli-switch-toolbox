@@ -272,6 +272,16 @@ class App extends React.Component {
     this.setState({ firmwareAnchorEl: null });
   };
 
+  get SelectedLED() {
+    return this.SelectedFirmware.leds[this.state.selectedLED];
+  }
+
+  get SelectedFirmware() {
+    return SwitchDefinitions[this.state.type].firmwares[
+      this.state.firmwareVersion
+    ];
+  }
+
   render() {
     return (
       <ThemeProvider>
@@ -319,27 +329,15 @@ class App extends React.Component {
             <div className={this.props.classes.switchWrapper}>
               <div>
                 <Switch
-                  leds={
-                    SwitchDefinitions[this.state.type].firmwares[
-                      this.state.firmwareVersion
-                    ].leds
-                  }
+                  leds={this.SelectedFirmware.leds}
                   paddles={SwitchDefinitions[this.state.type].paddles}
                   configs={
                     this.state.tab !== 1
                       ? this.state.notificationConfigs
                       : this.state.ledConfigs
                   }
-                  scenes={
-                    SwitchDefinitions[this.state.type].firmwares[
-                      this.state.firmwareVersion
-                    ].scenes
-                  }
-                  effects={
-                    SwitchDefinitions[this.state.type].firmwares[
-                      this.state.firmwareVersion
-                    ].effects
-                  }
+                  scenes={this.SelectedFirmware.scenes}
+                  effects={this.SelectedFirmware.effects}
                   images={SwitchDefinitions[this.state.type].images}
                   onSceneTriggered={this.onSceneTrigger}
                 />
@@ -418,9 +416,7 @@ class App extends React.Component {
                       ))}
                     </Menu>
                   </div>
-                  {SwitchDefinitions[this.state.type].firmwares[
-                    this.state.firmwareVersion
-                  ].leds.length > 1 && (
+                  {this.SelectedFirmware.leds.length > 1 && (
                     <FormControl fullWidth={true} style={{ marginTop: "10px" }}>
                       <InputLabel>LED Strip</InputLabel>
                       <Select
@@ -437,9 +433,7 @@ class App extends React.Component {
                       </Select>
                     </FormControl>
                   )}
-                  {SwitchDefinitions[this.state.type].firmwares[
-                    this.state.firmwareVersion
-                  ].leds[this.state.selectedLED].supportsIndvidualLEDs && (
+                  {this.SelectedLED.supportsIndvidualLEDs && (
                     <FormControl fullWidth={true} style={{ marginTop: "10px" }}>
                       <InputLabel>LED</InputLabel>
                       <Select
@@ -473,17 +467,9 @@ class App extends React.Component {
 
                 {this.state.tab === 0 && (
                   <NotificationCalc
-                    effects={
-                      SwitchDefinitions[this.state.type].firmwares[
-                        this.state.firmwareVersion
-                      ].effects
-                    }
+                    effects={this.SelectedFirmware.effects}
                     byteOrder={SwitchDefinitions[this.state.type].byteOrder}
-                    parameters={
-                      SwitchDefinitions[this.state.type].firmwares[
-                        this.state.firmwareVersion
-                      ].leds[this.state.selectedLED].parameters
-                    }
+                    parameters={this.SelectedLED.parameters}
                     config={
                       this.state.notificationConfigs[this.state.selectedLED][
                         this.state.selectedLEDLight === "all"
@@ -491,16 +477,9 @@ class App extends React.Component {
                           : this.state.selectedLEDLight
                       ]
                     }
-                    colorRange={
-                      SwitchDefinitions[this.state.type].firmwares[
-                        this.state.firmwareVersion
-                      ].leds[this.state.selectedLED].colorRange
-                    }
-                    brightnessRange={
-                      SwitchDefinitions[this.state.type].firmwares[
-                        this.state.firmwareVersion
-                      ].leds[this.state.selectedLED].brightnessRange
-                    }
+                    selectedLED={this.state.selectedLEDLight}
+                    colorRange={this.SelectedLED.colorRange}
+                    brightnessRange={this.SelectedLED.brightnessRange}
                     onChange={this.setConfigValue}
                     format={formatType}
                     protocol={SwitchDefinitions[this.state.type].protocol}
@@ -510,31 +489,16 @@ class App extends React.Component {
                   <SceneTable
                     highlight={this.state.highlight}
                     sceneMethod={sceneMethod}
-                    scenes={
-                      SwitchDefinitions[this.state.type].firmwares[
-                        this.state.firmwareVersion
-                      ].scenes
-                    }
+                    scenes={this.SelectedFirmware.scenes}
                   />
                 )}
                 {this.state.tab === 1 && (
                   <StandardLEDTools
-                    parameters={
-                      SwitchDefinitions[this.state.type].firmwares[
-                        this.state.firmwareVersion
-                      ].leds[this.state.selectedLED].parameters
-                    }
-                    colorRange={
-                      SwitchDefinitions[this.state.type].firmwares[
-                        this.state.firmwareVersion
-                      ].leds[this.state.selectedLED].colorRange
-                    }
-                    brightnessRange={
-                      SwitchDefinitions[this.state.type].firmwares[
-                        this.state.firmwareVersion
-                      ].leds[this.state.selectedLED].brightnessRange
-                    }
+                    parameters={this.SelectedLED.parameters}
+                    colorRange={this.SelectedLED.colorRange}
+                    brightnessRange={this.SelectedLED.brightnessRange}
                     calculationMethod={calculationMethod}
+                    selectedLED={this.state.selectedLEDLight}
                     config={
                       this.state.ledConfigs[this.state.selectedLED][
                         this.state.selectedLEDLight === "all"

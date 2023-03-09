@@ -1,9 +1,9 @@
-import v205 from "./firmwares/v2.05";
+import v100 from "./firmwares/v1.00";
 
 export default {
   protocol: "zwave",
   displayName: "On\\Off + Dimmer Switch",
-  model: "VZM31-SN",
+  model: "VZW31-SN",
   id: "zwave-onoff-dimmer",
   paddles: [
     {
@@ -24,10 +24,10 @@ export default {
       pos: { top: "162px", right: "129px", width: "10px", height: "57px" },
     },
   ],
-  byteOrder: ["color", "level", "duration", "effect"],
+  byteOrder: ["duration", "level", "color", "effect"],
   images: [],
-  defaultFirmware: "2.05",
+  defaultFirmware: "1.00",
   firmwares: {
-    2.05: v205,
+    "1.00": v100,
   },
 };

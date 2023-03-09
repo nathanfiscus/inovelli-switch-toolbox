@@ -140,6 +140,16 @@ class StandardLEDTools extends React.PureComponent {
     }
   };
 
+  configurationNumber(param) {
+    return this.props.parameters[param]
+      ? ` (Parameter ${
+          typeof this.props.parameters[param] === "number"
+            ? this.props.parameters[param]
+            : this.props.parameters[param][this.props.selectedLED]
+        })`
+      : "";
+  }
+
   render() {
     return (
       <div>
@@ -186,9 +196,9 @@ class StandardLEDTools extends React.PureComponent {
             Number(this.props.format || 10)
           )}
           readOnly={true}
-          label={`Color Value (Parameter ${
-            this.props.parameters[CONFIG_PARAMETER.COLOR]
-          })`}
+          label={`Color Value${this.configurationNumber(
+            CONFIG_PARAMETER.COLOR
+          )}`}
           fullWidth={true}
           margin="normal"
           variant="outlined"
@@ -223,9 +233,9 @@ class StandardLEDTools extends React.PureComponent {
             Number(this.props.format || 10)
           )}
           readOnly={true}
-          label={`Brightness Value (Parameter ${
-            this.props.parameters[CONFIG_PARAMETER.BRIGHTNESS]
-          })`}
+          label={`Brightness Value${this.configurationNumber(
+            CONFIG_PARAMETER.BRIGHTNESS
+          )}`}
           fullWidth={true}
           margin="normal"
           variant="outlined"
