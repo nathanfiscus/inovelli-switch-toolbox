@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/inovelli-switch-toolbox/static/js/main.0856f969.js",
+    "main.js": "/inovelli-switch-toolbox/static/js/main.f75d4eae.js",
     "static/media/lzw36-c.png": "/inovelli-switch-toolbox/static/media/lzw36-c.9c37c0114d4beeba7755.png",
     "static/media/lzw30-c.png": "/inovelli-switch-toolbox/static/media/lzw30-c.2e909eba20ea0dfacce1.png",
     "index.html": "/inovelli-switch-toolbox/index.html",
-    "main.0856f969.js.map": "/inovelli-switch-toolbox/static/js/main.0856f969.js.map"
+    "main.f75d4eae.js.map": "/inovelli-switch-toolbox/static/js/main.f75d4eae.js.map"
   },
   "entrypoints": [
-    "static/js/main.0856f969.js"
+    "static/js/main.f75d4eae.js"
   ]
 }
