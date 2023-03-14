@@ -221,7 +221,29 @@ class App extends React.Component {
   };
 
   setSelectedLEDLight = (e) => {
-    this.setState({ selectedLEDLight: e.target.value });
+    const value = e.target.value;
+    this.setState((lastState) => {
+      let notificationConfigs = JSON.parse(
+        JSON.stringify(lastState.notificationConfigs)
+      );
+      /*
+       * Reset LED notification programming if switching between single and all led modes
+       * because effect lists are different from one to another.
+       */
+      const isCurrentModeAllLED = isNaN(parseInt(lastState.selectedLEDLight));
+      const isNextModeAllLED = isNaN(parseInt(value));
+
+      if (isCurrentModeAllLED !== isNextModeAllLED) {
+        notificationConfigs = JSON.parse(
+          JSON.stringify(
+            SwitchDefinitions[lastState.type].firmwares[
+              lastState.firmwareVersion
+            ].leds.map((l) => Array(7).fill(l.defaultNotification))
+          )
+        );
+      }
+      return { selectedLEDLight: e.target.value, notificationConfigs };
+    });
   };
 
   openAboutDialog = () => {
@@ -337,7 +359,11 @@ class App extends React.Component {
                       : this.state.ledConfigs
                   }
                   scenes={this.SelectedFirmware.scenes}
-                  effects={this.SelectedFirmware.effects}
+                  effects={
+                    this.state.selectedLEDLight === "all"
+                      ? this.SelectedFirmware.effects
+                      : this.SelectedFirmware.singleLEDEffects
+                  }
                   images={SwitchDefinitions[this.state.type].images}
                   onSceneTriggered={this.onSceneTrigger}
                 />
@@ -467,7 +493,11 @@ class App extends React.Component {
 
                 {this.state.tab === 0 && (
                   <NotificationCalc
-                    effects={this.SelectedFirmware.effects}
+                    effects={
+                      this.state.selectedLEDLight === "all"
+                        ? this.SelectedFirmware.effects
+                        : this.SelectedFirmware.singleLEDEffects
+                    }
                     byteOrder={SwitchDefinitions[this.state.type].byteOrder}
                     parameters={this.SelectedLED.parameters}
                     config={

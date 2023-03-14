@@ -101,5 +101,36 @@ export default {
     },
     { name: "Clear Effect", value: 255, animation: "clear" },
   ],
+  singleLEDEffects: [
+    { name: "Solid", value: 1, animation: "solid" },
+    { name: "Fast Blink", value: 2, animation: "blink", speed: 400 },
+    { name: "Slow Blink", value: 3, animation: "blink", speed: 800 },
+    { name: "Pulse", value: 4, animation: "pulse", speed: 400 },
+    {
+      name: "Chase",
+      value: 5,
+      animation: "chase",
+      speed: 225,
+    },
+    {
+      name: "Falling",
+      value: 6,
+      animation: "falling",
+      speed: 600,
+    },
+    {
+      name: "Rising",
+      value: 7,
+      animation: "rising",
+      speed: 600,
+    },
+    {
+      name: "Aurora",
+      value: 8,
+      animation: "aurora",
+      speed: 400,
+    },
+    { name: "Clear Effect", value: 255, animation: "clear" },
+  ],
   scenes: Scenes,
 };
