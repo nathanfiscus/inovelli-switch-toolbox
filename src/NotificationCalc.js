@@ -29,6 +29,7 @@ import copyToClipboard from "./utils/ClipboardAccess";
 import YAML from "json-to-pretty-yaml";
 import { CONFIG_PARAMETER } from "./SwitchDefinitions/ConfigurationDefinitions";
 import CopyIcon from "./icons/Copy";
+import { longToByteArray, byteArrayToLong } from "./utils/ByteArray";
 
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
@@ -62,28 +63,6 @@ const styles = (theme) => ({
   },
 });
 
-const longToByteArray = function (/*long*/ long) {
-  // we want to represent the input as a 8-bytes array
-  var byteArray = [0, 0, 0, 0];
-
-  for (var index = 0; index < byteArray.length; index++) {
-    var byte = long & 0xff;
-    byteArray[index] = byte;
-    long = (long - byte) / 256;
-  }
-
-  return byteArray;
-};
-
-const byteArrayToLong = function (/*byte[]*/ byteArray) {
-  var value = 0;
-  for (var i = byteArray.length - 1; i >= 0; i--) {
-    value = value * 256 + byteArray[i];
-  }
-
-  return value;
-};
-
 class NotificationCalc extends React.Component {
   static propTypes = {
     config: PropTypes.object,
@@ -111,6 +90,45 @@ class NotificationCalc extends React.Component {
   };
 
   handleCopyYAML = () => {
+    this.setState({ anchor: null });
+    if (this.props.protocol !== "zwave") {
+      copyToClipboard(
+        YAML.stringify(Object.values(this.props.config)),
+        this.handleOnCopy
+      );
+    } else {
+      copyToClipboard(
+        YAML.stringify({
+          parameter:
+            typeof this.props.parameters[CONFIG_PARAMETER.LED_EFFECT] ===
+            "number"
+              ? this.props.parameters[CONFIG_PARAMETER.LED_EFFECT]
+              : this.props.parameters[CONFIG_PARAMETER.LED_EFFECT][
+                  this.props.selectedLED
+                ],
+          value:
+            this.props.format === "10"
+              ? parseInt(
+                  byteArrayToLong([
+                    this.props.config[this.props.byteOrder[0]],
+                    this.props.config[this.props.byteOrder[1]],
+                    this.props.config[this.props.byteOrder[2]],
+                    this.props.config[this.props.byteOrder[3]],
+                  ]).toString(Number(this.props.format || 10))
+                )
+              : byteArrayToLong([
+                  this.props.config[this.props.byteOrder[0]],
+                  this.props.config[this.props.byteOrder[1]],
+                  this.props.config[this.props.byteOrder[2]],
+                  this.props.config[this.props.byteOrder[3]],
+                ]).toString(Number(this.props.format || 10)),
+        }),
+        this.handleOnCopy
+      );
+    }
+  };
+
+  handleCopyAllYAML = () => {
     this.setState({ anchor: null });
     if (this.props.protocol !== "zwave") {
       copyToClipboard(
@@ -197,15 +215,6 @@ class NotificationCalc extends React.Component {
   };
 
   get configurationValue() {
-    // let byteArr = [
-    //   this.props.config[this.props.byteOrder[0]],
-    //   this.props.config[this.props.byteOrder[1]],
-    //   this.props.config[this.props.byteOrder[2]],
-    //   this.props.config[this.props.byteOrder[3]],
-    // ];
-
-    // byteArr[this.props.byteOrder.find(b=>b === "effect")] = this.props.effect
-
     let value;
 
     if (this.props.protocol === "zwave") {
@@ -355,6 +364,11 @@ class NotificationCalc extends React.Component {
                     <MenuItem onClick={this.handleCopyYAML}>
                       Copy as YAML
                     </MenuItem>
+                    {false && this.props.selectedLED !== "all" && (
+                      <MenuItem onClick={this.handleCopyAllYAML}>
+                        Copy All LEDs as YAML
+                      </MenuItem>
+                    )}
                   </Menu>
                 </InputAdornment>
               ),

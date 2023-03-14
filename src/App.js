@@ -27,9 +27,13 @@ import NotificationCalc from "./NotificationCalc";
 import SceneTable from "./SceneTable";
 import StandardLEDTools from "./StandardLEDTools";
 import TuneIcon from "@material-ui/icons/Tune";
+import ShareIcon from "@material-ui/icons/Share";
 import OptionsDialog from "./Options";
 import SwitchDefinitions from "./SwitchDefinitions";
 import CPUIcon from "./icons/CPU.js";
+import copyTextToClipboard from "./utils/ClipboardAccess";
+import qs from "qs";
+import { byteArrayToLong, longToByteArray } from "./utils/ByteArray";
 
 const styles = (theme) => ({
   switchWrapper: {
@@ -81,30 +85,6 @@ const styles = (theme) => ({
   },
 });
 
-//Might Move to this calc in the future. More straight forward
-
-// const longToByteArray = function (/*long*/ long) {
-//   // we want to represent the input as a 8-bytes array
-//   var byteArray = [0, 0, 0, 0];
-
-//   for (var index = 0; index < byteArray.length; index++) {
-//     var byte = long & 0xff;
-//     byteArray[index] = byte;
-//     long = (long - byte) / 256;
-//   }
-
-//   return byteArray;
-// };
-
-// const byteArrayToLong = function(/*byte[]*/ byteArray) {
-//   var value = 0;
-//   for (var i = byteArray.length - 1; i >= 0; i--) {
-//     value = value * 256 + byteArray[i];
-//   }
-
-//   return value;
-// };
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -138,6 +118,12 @@ class App extends React.Component {
       firmwareAnchorEl: null,
       selectedLEDLight: "all",
     };
+  }
+
+  componentDidMount() {
+    if (document.location.search) {
+      this.loadFromURL();
+    }
   }
 
   setValue = (param, value) => {
@@ -294,6 +280,61 @@ class App extends React.Component {
     this.setState({ firmwareAnchorEl: null });
   };
 
+  loadFromURL = () => {
+    const query = qs.parse(document.location.search.replace(/\?/, ""));
+    console.log(query);
+    let state = {
+      type: query.s,
+      firmwareVersion:
+        this.state.userFirmwares[SwitchDefinitions[query.s].id] ||
+        SwitchDefinitions[query.s].defaultFirmware,
+      selectedLEDLight: query.m === "true" ? "all" : 0,
+      notificationConfigs: query.l.map((l) => {
+        return l.map((n) => {
+          const arr = longToByteArray(n);
+          return {
+            [SwitchDefinitions[query.s].byteOrder[0]]: arr[0],
+            [SwitchDefinitions[query.s].byteOrder[1]]: arr[1],
+            [SwitchDefinitions[query.s].byteOrder[2]]: arr[2],
+            [SwitchDefinitions[query.s].byteOrder[3]]: arr[3],
+          };
+        });
+      }),
+    };
+
+    this.setState(state);
+  };
+
+  shareNotification = () => {
+    let allLEDMode = isNaN(parseInt(this.state.selectedLEDLight));
+    let state = {
+      s: this.state.type,
+      m: allLEDMode,
+      l: this.state.notificationConfigs.map((l) => {
+        return l.map((n) =>
+          byteArrayToLong([
+            n[SwitchDefinitions[this.state.type].byteOrder[0]],
+            n[SwitchDefinitions[this.state.type].byteOrder[1]],
+            n[SwitchDefinitions[this.state.type].byteOrder[2]],
+            n[SwitchDefinitions[this.state.type].byteOrder[3]],
+          ]).toString(10)
+        );
+      }),
+    };
+
+    //Pretty Up the URL
+    const query = qs.stringify(state).replace(/%5B/g, "[").replace(/%5D/g, "]");
+    copyTextToClipboard(
+      document.location.protocol +
+        "//" +
+        document.location.host +
+        document.location.pathname +
+        "?" +
+        query,
+      () => {}
+    );
+  };
+
   get SelectedLED() {
     return this.SelectedFirmware.leds[this.state.selectedLED];
   }
@@ -335,6 +376,14 @@ class App extends React.Component {
                   <span style={{ marginLeft: "8px" }}> :: Switch Toolbox</span>
                 </Typography>
                 <div style={{ flexShrink: "0", flexGrow: "0" }}>
+                  <Tooltip title="Share Notification Program">
+                    <IconButton
+                      color="inherit"
+                      onClick={this.shareNotification}
+                    >
+                      <ShareIcon />
+                    </IconButton>
+                  </Tooltip>
                   <Tooltip title="Options">
                     <IconButton color="inherit" onClick={this.openOptions}>
                       <TuneIcon />
