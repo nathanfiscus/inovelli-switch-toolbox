@@ -102,13 +102,13 @@ export default {
     {
       name: "Slow Siren",
       value: 18,
-      animation: "chase",
+      animation: "siren",
       speed: 800,
     },
     {
       name: "Fast Siren",
       value: 19,
-      animation: "chase",
+      animation: "siren",
       speed: 150,
     },
     { name: "Clear Effect", value: 255, animation: "clear" },

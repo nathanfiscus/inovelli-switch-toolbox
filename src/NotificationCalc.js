@@ -364,6 +364,10 @@ class NotificationCalc extends React.Component {
                     <MenuItem onClick={this.handleCopyYAML}>
                       Copy as YAML
                     </MenuItem>
+                    {/**
+                     * Im not sure that this really make sense....
+                     * Will hold off enabling this
+                     */}
                     {false && this.props.selectedLED !== "all" && (
                       <MenuItem onClick={this.handleCopyAllYAML}>
                         Copy All LEDs as YAML

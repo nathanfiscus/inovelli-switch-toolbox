@@ -127,16 +127,16 @@ export default {
       speed: 150,
     },
     {
-      name: "Slow Siren",
+      name: "Fast Siren",
       value: 18,
-      animation: "chase",
-      speed: 800,
+      animation: "siren",
+      speed: 300,
     },
     {
-      name: "Fast Siren",
+      name: "Slow Siren",
       value: 19,
-      animation: "chase",
-      speed: 150,
+      animation: "siren",
+      speed: 600,
     },
   ],
   singleLEDEffects: [
