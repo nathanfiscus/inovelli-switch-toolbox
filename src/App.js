@@ -19,7 +19,6 @@ import {
   ListSubheader,
   ListItemText,
 } from "@material-ui/core";
-import ThemeProvider from "./ThemeProvider";
 import InfoOutlined from "@material-ui/icons/InfoOutlined";
 import AboutDialog from "./AboutDialog";
 import Switch from "./Switch";
@@ -81,7 +80,7 @@ const styles = (theme) => ({
     marginBottom: theme.spacing(3),
   },
   subheader: {
-    color: "#ed1c24",
+    color: theme.palette.primary.main,
   },
 });
 
@@ -181,6 +180,7 @@ class App extends React.Component {
     const firmwareVersion =
       this.state.userFirmwares[SwitchDefinitions[e.target.value].id] ||
       SwitchDefinitions[e.target.value].defaultFirmware;
+    this.props.setProtocolType(SwitchDefinitions[e.target.value].protocol);
     this.setState({
       firmwareVersion,
       type: e.target.value,
@@ -347,269 +347,250 @@ class App extends React.Component {
 
   render() {
     return (
-      <ThemeProvider>
-        {({
-          setTheme,
-          themeType,
-          formatType,
-          setFormat,
-          setCalculationMethod,
-          calculationMethod,
-          setSceneMethod,
-          sceneMethod,
-        }) => (
-          <div className={this.props.classes.root}>
-            <CssBaseline />
-            <AppBar position="static">
-              <Toolbar>
-                <Typography
-                  variant="h5"
-                  style={{
-                    flexGrow: "1",
-                    alignItems: "center",
-                    display: "flex",
-                  }}
-                >
-                  <Typography variant="h4" component="span">
-                    <strong>inovelli </strong>
-                  </Typography>
-                  <span style={{ marginLeft: "8px" }}> :: Switch Toolbox</span>
-                </Typography>
-                <div style={{ flexShrink: "0", flexGrow: "0" }}>
-                  <Tooltip title="Share Notification Program">
-                    <IconButton
-                      color="inherit"
-                      onClick={this.shareNotification}
-                    >
-                      <ShareIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Options">
-                    <IconButton color="inherit" onClick={this.openOptions}>
-                      <TuneIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="About">
-                    <IconButton color="inherit" onClick={this.openAboutDialog}>
-                      <InfoOutlined />
-                    </IconButton>
-                  </Tooltip>
-                </div>
-              </Toolbar>
-            </AppBar>
-            <div className={this.props.classes.switchWrapper}>
-              <div>
-                <Switch
-                  leds={this.SelectedFirmware.leds}
-                  paddles={SwitchDefinitions[this.state.type].paddles}
-                  configs={
-                    this.state.tab !== 1
-                      ? this.state.notificationConfigs
-                      : this.state.ledConfigs
-                  }
-                  scenes={this.SelectedFirmware.scenes}
-                  effects={
-                    this.state.selectedLEDLight === "all"
-                      ? this.SelectedFirmware.effects
-                      : this.SelectedFirmware.singleLEDEffects
-                  }
-                  images={SwitchDefinitions[this.state.type].images}
-                  onSceneTriggered={this.onSceneTrigger}
-                />
-              </div>
-              <div className={this.props.classes.optionsContainer}>
-                <div className={this.props.classes.switchPicker}>
-                  <div className={this.props.classes.switchConfigWrapper}>
-                    <FormControl fullWidth={true} margin="normal">
-                      <InputLabel>Switch Type</InputLabel>
-                      <Select
-                        value={this.state.type}
-                        onChange={this.setSwitchType}
-                      >
-                        <ListSubheader className={this.props.classes.subheader}>
-                          Z-Wave
-                        </ListSubheader>
-                        {SwitchDefinitions.reduce((arr, sw, index) => {
-                          if (sw.protocol === "zwave")
-                            arr.push(
-                              <MenuItem key={sw.id} value={index}>
-                                <ListItemText
-                                  primary={sw.displayName}
-                                  secondary={sw.model}
-                                />
-                              </MenuItem>
-                            );
-                          return arr;
-                        }, [])}
-                        <ListSubheader className={this.props.classes.subheader}>
-                          Zigbee
-                        </ListSubheader>
-                        {SwitchDefinitions.reduce((arr, sw, index) => {
-                          if (sw.protocol !== "zwave")
-                            arr.push(
-                              <MenuItem key={sw.id} value={index}>
-                                <ListItemText
-                                  primary={sw.displayName}
-                                  secondary={sw.model}
-                                />
-                              </MenuItem>
-                            );
-                          return arr;
-                        }, [])}
-                      </Select>
-                    </FormControl>
-
-                    <Tooltip title="Firmware Version">
-                      <Badge
-                        badgeContent={this.state.firmwareVersion}
-                        color="primary"
-                        overlap="circle"
-                      >
-                        <IconButton onClick={this.openFirmwareMenu}>
-                          <SvgIcon>
-                            <CPUIcon />
-                          </SvgIcon>
-                        </IconButton>
-                      </Badge>
-                    </Tooltip>
-                    <Menu
-                      open={Boolean(this.state.firmwareAnchorEl)}
-                      anchorEl={this.state.firmwareAnchorEl}
-                      onClose={this.handleCloseFirmwareMenu}
-                    >
-                      <ListSubheader>Firmware Version</ListSubheader>
-                      {Object.keys(
-                        SwitchDefinitions[this.state.type].firmwares
-                      ).map((f) => (
-                        <MenuItem
-                          key={f}
-                          onClick={this.setFirmwareVersion(f)}
-                          value={f}
-                        >
-                          {f}
-                        </MenuItem>
-                      ))}
-                    </Menu>
-                  </div>
-                  {this.SelectedFirmware.leds.length > 1 && (
-                    <FormControl fullWidth={true} style={{ marginTop: "10px" }}>
-                      <InputLabel>LED Strip</InputLabel>
-                      <Select
-                        value={this.state.selectedLED}
-                        onChange={this.setSelectedLED}
-                      >
-                        {SwitchDefinitions[this.state.type].firmwares[
-                          this.state.firmwareVersion
-                        ].leds.map((led, index) => (
-                          <MenuItem key={led.name} value={index}>
-                            {led.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  )}
-                  {this.SelectedLED.supportsIndvidualLEDs && (
-                    <FormControl fullWidth={true} style={{ marginTop: "10px" }}>
-                      <InputLabel>LED</InputLabel>
-                      <Select
-                        value={this.state.selectedLEDLight}
-                        onChange={this.setSelectedLEDLight}
-                      >
-                        <MenuItem value={"all"}>All</MenuItem>
-                        <MenuItem value={0}>7</MenuItem>
-                        <MenuItem value={1}>6</MenuItem>
-                        <MenuItem value={2}>5</MenuItem>
-                        <MenuItem value={3}>4</MenuItem>
-                        <MenuItem value={4}>3</MenuItem>
-                        <MenuItem value={5}>2</MenuItem>
-                        <MenuItem value={6}>1</MenuItem>
-                      </Select>
-                    </FormControl>
-                  )}
-                  <Tabs
-                    value={this.state.tab}
-                    indicatorColor="primary"
-                    onChange={this.tabChange}
-                    style={{ marginBottom: "10px" }}
-                    variant="fullWidth"
-                    centered
-                  >
-                    <Tab label="Notifications" />
-                    <Tab label="LED" />
-                    {/* <Tab label="Scenes" /> */}
-                  </Tabs>
-                </div>
-
-                {this.state.tab === 0 && (
-                  <NotificationCalc
-                    effects={
-                      this.state.selectedLEDLight === "all"
-                        ? this.SelectedFirmware.effects
-                        : this.SelectedFirmware.singleLEDEffects
-                    }
-                    byteOrder={SwitchDefinitions[this.state.type].byteOrder}
-                    parameters={this.SelectedLED.parameters}
-                    config={
-                      this.state.notificationConfigs[this.state.selectedLED][
-                        this.state.selectedLEDLight === "all"
-                          ? 0
-                          : this.state.selectedLEDLight
-                      ]
-                    }
-                    selectedLED={this.state.selectedLEDLight}
-                    colorRange={this.SelectedLED.colorRange}
-                    brightnessRange={this.SelectedLED.brightnessRange}
-                    onChange={this.setConfigValue}
-                    format={formatType}
-                    protocol={SwitchDefinitions[this.state.type].protocol}
-                  />
-                )}
-                {this.state.tab === 2 && (
-                  <SceneTable
-                    highlight={this.state.highlight}
-                    sceneMethod={sceneMethod}
-                    scenes={this.SelectedFirmware.scenes}
-                  />
-                )}
-                {this.state.tab === 1 && (
-                  <StandardLEDTools
-                    parameters={this.SelectedLED.parameters}
-                    colorRange={this.SelectedLED.colorRange}
-                    brightnessRange={this.SelectedLED.brightnessRange}
-                    calculationMethod={calculationMethod}
-                    selectedLED={this.state.selectedLEDLight}
-                    config={
-                      this.state.ledConfigs[this.state.selectedLED][
-                        this.state.selectedLEDLight === "all"
-                          ? 0
-                          : this.state.selectedLEDLight
-                      ]
-                    }
-                    onChange={this.setConfigValue}
-                    format={formatType}
-                  />
-                )}
-              </div>
+      <div className={this.props.classes.root}>
+        <CssBaseline />
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              variant="h5"
+              style={{
+                flexGrow: "1",
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
+              <Typography variant="h4" component="span">
+                <strong>inovelli </strong>
+              </Typography>
+              <span style={{ marginLeft: "8px" }}> :: Switch Toolbox</span>
+            </Typography>
+            <div style={{ flexShrink: "0", flexGrow: "0" }}>
+              <Tooltip title="Share Notification Program">
+                <IconButton color="inherit" onClick={this.shareNotification}>
+                  <ShareIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Options">
+                <IconButton color="inherit" onClick={this.openOptions}>
+                  <TuneIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="About">
+                <IconButton color="inherit" onClick={this.openAboutDialog}>
+                  <InfoOutlined />
+                </IconButton>
+              </Tooltip>
             </div>
-            <AboutDialog
-              open={this.state.aboutDialogOpen}
-              onClose={this.closeAboutDialog}
-            />
-            <OptionsDialog
-              open={this.state.optionsDialogOpen}
-              onClose={this.closeOptions}
-              theme={themeType}
-              format={formatType}
-              setTheme={setTheme}
-              setFormat={setFormat}
-              setCalculationMethod={setCalculationMethod}
-              calculationMethod={calculationMethod}
-              sceneMethod={sceneMethod}
-              setSceneMethod={setSceneMethod}
+          </Toolbar>
+        </AppBar>
+        <div className={this.props.classes.switchWrapper}>
+          <div>
+            <Switch
+              leds={this.SelectedFirmware.leds}
+              paddles={SwitchDefinitions[this.state.type].paddles}
+              configs={
+                this.state.tab !== 1
+                  ? this.state.notificationConfigs
+                  : this.state.ledConfigs
+              }
+              scenes={this.SelectedFirmware.scenes}
+              effects={
+                this.state.selectedLEDLight === "all"
+                  ? this.SelectedFirmware.effects
+                  : this.SelectedFirmware.singleLEDEffects
+              }
+              images={SwitchDefinitions[this.state.type].images}
+              onSceneTriggered={this.onSceneTrigger}
             />
           </div>
-        )}
-      </ThemeProvider>
+          <div className={this.props.classes.optionsContainer}>
+            <div className={this.props.classes.switchPicker}>
+              <div className={this.props.classes.switchConfigWrapper}>
+                <FormControl fullWidth={true} margin="normal">
+                  <InputLabel>Switch Type</InputLabel>
+                  <Select value={this.state.type} onChange={this.setSwitchType}>
+                    <ListSubheader className={this.props.classes.subheader}>
+                      Z-Wave
+                    </ListSubheader>
+                    {SwitchDefinitions.reduce((arr, sw, index) => {
+                      if (sw.protocol === "zwave")
+                        arr.push(
+                          <MenuItem key={sw.id} value={index}>
+                            <ListItemText
+                              primary={sw.displayName}
+                              secondary={sw.model}
+                            />
+                          </MenuItem>
+                        );
+                      return arr;
+                    }, [])}
+                    <ListSubheader className={this.props.classes.subheader}>
+                      Zigbee
+                    </ListSubheader>
+                    {SwitchDefinitions.reduce((arr, sw, index) => {
+                      if (sw.protocol !== "zwave")
+                        arr.push(
+                          <MenuItem key={sw.id} value={index}>
+                            <ListItemText
+                              primary={sw.displayName}
+                              secondary={sw.model}
+                            />
+                          </MenuItem>
+                        );
+                      return arr;
+                    }, [])}
+                  </Select>
+                </FormControl>
+
+                <Tooltip title="Firmware Version">
+                  <Badge
+                    badgeContent={this.state.firmwareVersion}
+                    color="primary"
+                    overlap="circle"
+                  >
+                    <IconButton onClick={this.openFirmwareMenu}>
+                      <SvgIcon>
+                        <CPUIcon />
+                      </SvgIcon>
+                    </IconButton>
+                  </Badge>
+                </Tooltip>
+                <Menu
+                  open={Boolean(this.state.firmwareAnchorEl)}
+                  anchorEl={this.state.firmwareAnchorEl}
+                  onClose={this.handleCloseFirmwareMenu}
+                >
+                  <ListSubheader>Firmware Version</ListSubheader>
+                  {Object.keys(
+                    SwitchDefinitions[this.state.type].firmwares
+                  ).map((f) => (
+                    <MenuItem
+                      key={f}
+                      onClick={this.setFirmwareVersion(f)}
+                      value={f}
+                    >
+                      {f}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </div>
+              {this.SelectedFirmware.leds.length > 1 && (
+                <FormControl fullWidth={true} style={{ marginTop: "10px" }}>
+                  <InputLabel>LED Strip</InputLabel>
+                  <Select
+                    value={this.state.selectedLED}
+                    onChange={this.setSelectedLED}
+                  >
+                    {SwitchDefinitions[this.state.type].firmwares[
+                      this.state.firmwareVersion
+                    ].leds.map((led, index) => (
+                      <MenuItem key={led.name} value={index}>
+                        {led.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+              {this.SelectedLED.supportsIndvidualLEDs && (
+                <FormControl fullWidth={true} style={{ marginTop: "10px" }}>
+                  <InputLabel>LED</InputLabel>
+                  <Select
+                    value={this.state.selectedLEDLight}
+                    onChange={this.setSelectedLEDLight}
+                  >
+                    <MenuItem value={"all"}>All</MenuItem>
+                    <MenuItem value={0}>7</MenuItem>
+                    <MenuItem value={1}>6</MenuItem>
+                    <MenuItem value={2}>5</MenuItem>
+                    <MenuItem value={3}>4</MenuItem>
+                    <MenuItem value={4}>3</MenuItem>
+                    <MenuItem value={5}>2</MenuItem>
+                    <MenuItem value={6}>1</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+              <Tabs
+                value={this.state.tab}
+                indicatorColor="primary"
+                onChange={this.tabChange}
+                style={{ marginBottom: "10px" }}
+                variant="fullWidth"
+                centered
+              >
+                <Tab label="Notifications" />
+                <Tab label="LED" />
+                {/* <Tab label="Scenes" /> */}
+              </Tabs>
+            </div>
+
+            {this.state.tab === 0 && (
+              <NotificationCalc
+                effects={
+                  this.state.selectedLEDLight === "all"
+                    ? this.SelectedFirmware.effects
+                    : this.SelectedFirmware.singleLEDEffects
+                }
+                byteOrder={SwitchDefinitions[this.state.type].byteOrder}
+                parameters={this.SelectedLED.parameters}
+                config={
+                  this.state.notificationConfigs[this.state.selectedLED][
+                    this.state.selectedLEDLight === "all"
+                      ? 0
+                      : this.state.selectedLEDLight
+                  ]
+                }
+                selectedLED={this.state.selectedLEDLight}
+                colorRange={this.SelectedLED.colorRange}
+                brightnessRange={this.SelectedLED.brightnessRange}
+                onChange={this.setConfigValue}
+                format={this.props.formatType}
+                protocol={SwitchDefinitions[this.state.type].protocol}
+              />
+            )}
+            {this.state.tab === 2 && (
+              <SceneTable
+                highlight={this.state.highlight}
+                sceneMethod={this.props.sceneMethod}
+                scenes={this.SelectedFirmware.scenes}
+              />
+            )}
+            {this.state.tab === 1 && (
+              <StandardLEDTools
+                parameters={this.SelectedLED.parameters}
+                colorRange={this.SelectedLED.colorRange}
+                brightnessRange={this.SelectedLED.brightnessRange}
+                calculationMethod={this.props.calculationMethod}
+                selectedLED={this.state.selectedLEDLight}
+                config={
+                  this.state.ledConfigs[this.state.selectedLED][
+                    this.state.selectedLEDLight === "all"
+                      ? 0
+                      : this.state.selectedLEDLight
+                  ]
+                }
+                onChange={this.setConfigValue}
+                format={this.props.formatType}
+              />
+            )}
+          </div>
+        </div>
+        <AboutDialog
+          open={this.state.aboutDialogOpen}
+          onClose={this.closeAboutDialog}
+        />
+        <OptionsDialog
+          open={this.state.optionsDialogOpen}
+          onClose={this.closeOptions}
+          theme={this.props.themeType}
+          format={this.props.formatType}
+          setTheme={this.props.setTheme}
+          setFormat={this.props.setFormat}
+          setCalculationMethod={this.props.setCalculationMethod}
+          calculationMethod={this.props.calculationMethod}
+          sceneMethod={this.props.sceneMethod}
+          setSceneMethod={this.props.setSceneMethod}
+        />
+      </div>
     );
   }
 }

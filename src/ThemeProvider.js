@@ -1,7 +1,8 @@
 import React from "react";
 import { MuiThemeProvider, createTheme } from "@material-ui/core";
 
-const primary = "#ed1c24";
+const ZWAVE_PRIMARY = "#ed1c24";
+const ZIGBEE_PRIMARY = "#0366fc";
 const DARK = "#0f1a20";
 
 class ThemeProvider extends React.Component {
@@ -30,13 +31,20 @@ class ThemeProvider extends React.Component {
           window.localStorage.setItem("themeType", theme);
         }
       },
+      protocolType: "zwave",
+      setProtocolType: (protocol) => {
+        this.setState({ protocolType: protocol });
+      },
     };
   }
 
   render() {
     let palette = {
       type: this.state.themeType,
-      primary: { main: primary },
+      primary: {
+        main:
+          this.state.protocolType === "zwave" ? ZWAVE_PRIMARY : ZIGBEE_PRIMARY,
+      },
       background: { default: DARK, paper: "#343434" },
     };
 
