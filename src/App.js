@@ -82,6 +82,11 @@ const styles = (theme) => ({
   subheader: {
     color: theme.palette.primary.main,
   },
+  titleMobile: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
 });
 
 class App extends React.Component {
@@ -362,7 +367,14 @@ class App extends React.Component {
               <Typography variant="h4" component="span">
                 <strong>inovelli </strong>
               </Typography>
-              <span style={{ marginLeft: "8px" }}> :: Switch Toolbox</span>
+              <span style={{ marginLeft: "8px" }}>
+                {" "}
+                ::{" "}
+                <span className={this.props.classes.titleMobile}>
+                  Switch
+                </span>{" "}
+                Toolbox
+              </span>
             </Typography>
             <div style={{ flexShrink: "0", flexGrow: "0" }}>
               <Tooltip title="Share Notification Program">
