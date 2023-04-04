@@ -184,7 +184,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED1,
                   0
                 ) *
-                (this.props.level[0] / 10)
+                (this.props.level[0] / this.props.brightnessRange[1])
               }
               className={this.props.classes.diffuse}
             />
@@ -196,7 +196,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED2,
                   1
                 ) *
-                (this.props.level[1] / 10)
+                (this.props.level[1] / this.props.brightnessRange[1])
               }
               className={this.props.classes.diffuse}
             />
@@ -208,7 +208,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED3,
                   2
                 ) *
-                (this.props.level[2] / 10)
+                (this.props.level[2] / this.props.brightnessRange[1])
               }
               className={this.props.classes.diffuse}
             />
@@ -220,7 +220,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED4,
                   3
                 ) *
-                (this.props.level[3] / 10)
+                (this.props.level[3] / this.props.brightnessRange[1])
               }
               className={this.props.classes.diffuse}
             />
@@ -232,7 +232,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED5,
                   4
                 ) *
-                (this.props.level[4] / 10)
+                (this.props.level[4] / this.props.brightnessRange[1])
               }
               className={this.props.classes.diffuse}
             />
@@ -244,7 +244,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED6,
                   5
                 ) *
-                (this.props.level[5] / 10)
+                (this.props.level[5] / this.props.brightnessRange[1])
               }
               className={this.props.classes.diffuse}
             />
@@ -256,7 +256,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED7,
                   6
                 ) *
-                (this.props.level[6] / 10)
+                (this.props.level[6] / this.props.brightnessRange[1])
               }
               className={this.props.classes.diffuse}
             />
@@ -278,7 +278,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED1,
                   0
                 ) *
-                (this.props.level[0] / 10)
+                (this.props.level[0] / this.props.brightnessRange[1])
               }
             />
             <WS2812
@@ -289,7 +289,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED2,
                   1
                 ) *
-                (this.props.level[1] / 10)
+                (this.props.level[1] / this.props.brightnessRange[1])
               }
             />
             <WS2812
@@ -300,7 +300,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED3,
                   2
                 ) *
-                (this.props.level[2] / 10)
+                (this.props.level[2] / this.props.brightnessRange[1])
               }
             />
             <WS2812
@@ -311,7 +311,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED4,
                   3
                 ) *
-                (this.props.level[3] / 10)
+                (this.props.level[3] / this.props.brightnessRange[1])
               }
             />
             <WS2812
@@ -322,7 +322,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED5,
                   4
                 ) *
-                (this.props.level[4] / 10)
+                (this.props.level[4] / this.props.brightnessRange[1])
               }
             />
             <WS2812
@@ -333,7 +333,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED6,
                   5
                 ) *
-                (this.props.level[5] / 10)
+                (this.props.level[5] / this.props.brightnessRange[1])
               }
             />
             <WS2812
@@ -344,7 +344,7 @@ class LED2 extends React.Component {
                   this.state.animationStepLED7,
                   6
                 ) *
-                (this.props.level[6] / 10)
+                (this.props.level[6] / this.props.brightnessRange[1])
               }
             />
           </div>

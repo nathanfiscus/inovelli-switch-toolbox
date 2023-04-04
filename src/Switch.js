@@ -95,6 +95,7 @@ class Switch extends React.Component {
             )}
             effects={this.props.effects}
             level={this.props.configs[index].map((l) => l.level)}
+            brightnessRange={led.brightnessRange}
           />
         ))}
       </div>
