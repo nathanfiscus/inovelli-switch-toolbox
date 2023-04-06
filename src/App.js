@@ -303,16 +303,27 @@ class App extends React.Component {
       selectedLEDLight: query.m === "true" ? "all" : 0,
       notificationConfigs: query.l.map((l) => {
         return l.map((n) => {
-          const arr = longToByteArray(n);
-          return {
-            [SwitchDefinitions[query.s].byteOrder[0]]: arr[0],
-            [SwitchDefinitions[query.s].byteOrder[1]]: arr[1],
-            [SwitchDefinitions[query.s].byteOrder[2]]: arr[2],
-            [SwitchDefinitions[query.s].byteOrder[3]]: arr[3],
-          };
+          if (SwitchDefinitions[query.s].protocol === "zwave") {
+            const arr = longToByteArray(n);
+            return {
+              [SwitchDefinitions[query.s].byteOrder[0]]: arr[0],
+              [SwitchDefinitions[query.s].byteOrder[1]]: arr[1],
+              [SwitchDefinitions[query.s].byteOrder[2]]: arr[2],
+              [SwitchDefinitions[query.s].byteOrder[3]]: arr[3],
+            };
+          } else {
+            const arr = n.split(",");
+            return {
+              effect: arr[0],
+              level: arr[1],
+              color: arr[2],
+              duration: arr[3],
+            };
+          }
         });
       }),
     };
+    this.props.setProtocolType(SwitchDefinitions[query.s].protocol);
 
     this.setState(state);
   };
@@ -323,19 +334,27 @@ class App extends React.Component {
       s: this.state.type,
       m: allLEDMode,
       l: this.state.notificationConfigs.map((l) => {
-        return l.map((n) =>
-          byteArrayToLong([
-            n[SwitchDefinitions[this.state.type].byteOrder[0]],
-            n[SwitchDefinitions[this.state.type].byteOrder[1]],
-            n[SwitchDefinitions[this.state.type].byteOrder[2]],
-            n[SwitchDefinitions[this.state.type].byteOrder[3]],
-          ]).toString(10)
-        );
+        return l.map((n) => {
+          if (SwitchDefinitions[this.state.type].protocol === "zwave") {
+            return byteArrayToLong([
+              n[SwitchDefinitions[this.state.type].byteOrder[0]],
+              n[SwitchDefinitions[this.state.type].byteOrder[1]],
+              n[SwitchDefinitions[this.state.type].byteOrder[2]],
+              n[SwitchDefinitions[this.state.type].byteOrder[3]],
+            ]).toString(10);
+          } else {
+            return Object.values(n).join(",");
+          }
+        });
       }),
     };
 
     //Pretty Up the URL
-    const query = qs.stringify(state).replace(/%5B/g, "[").replace(/%5D/g, "]");
+    const query = qs
+      .stringify(state)
+      .replace(/%5B/g, "[")
+      .replace(/%5D/g, "]")
+      .replace(/%2C/g, ",");
     copyTextToClipboard(
       document.location.protocol +
         "//" +
