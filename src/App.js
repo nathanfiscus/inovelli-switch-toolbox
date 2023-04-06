@@ -85,7 +85,7 @@ const styles = (theme) => ({
     marginBottom: theme.spacing(3),
   },
   subheader: {
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.light,
   },
   titleMobile: {
     [theme.breakpoints.down("sm")]: {
