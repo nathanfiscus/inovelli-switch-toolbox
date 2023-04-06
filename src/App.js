@@ -18,6 +18,8 @@ import {
   Menu,
   ListSubheader,
   ListItemText,
+  Slide,
+  Snackbar,
 } from "@material-ui/core";
 import InfoOutlined from "@material-ui/icons/InfoOutlined";
 import AboutDialog from "./AboutDialog";
@@ -33,6 +35,9 @@ import CPUIcon from "./icons/CPU.js";
 import copyTextToClipboard from "./utils/ClipboardAccess";
 import qs from "qs";
 import { byteArrayToLong, longToByteArray } from "./utils/ByteArray";
+function SlideTransition(props) {
+  return <Slide {...props} direction="up" />;
+}
 
 const styles = (theme) => ({
   switchWrapper: {
@@ -103,6 +108,8 @@ class App extends React.Component {
       tab: 0,
       selectedLED: 0,
       highlight: null,
+      snackbarOpen: false,
+      copyStatusText: "",
       ledConfigs: JSON.parse(
         JSON.stringify(
           SwitchDefinitions[0].firmwares[firmwareVersion].leds.map((l) =>
@@ -336,8 +343,21 @@ class App extends React.Component {
         document.location.pathname +
         "?" +
         query,
-      () => {}
+      this.handleOnCopy
     );
+  };
+
+  handleOnCopy = (success) => {
+    this.setState({
+      snackbarOpen: true,
+      copyStatusText: success
+        ? "Share Link copied to clipboard!"
+        : "Unable to copy to clipboard. Check browser settings.",
+    });
+  };
+
+  handleSnackbarClose = () => {
+    this.setState({ snackbarOpen: false });
   };
 
   get SelectedLED() {
@@ -601,6 +621,17 @@ class App extends React.Component {
           calculationMethod={this.props.calculationMethod}
           sceneMethod={this.props.sceneMethod}
           setSceneMethod={this.props.setSceneMethod}
+        />
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          TransitionComponent={SlideTransition}
+          open={this.state.snackbarOpen}
+          autoHideDuration={4000}
+          onClose={this.handleSnackbarClose}
+          message={<span id="message-id">{this.state.copyStatusText}</span>}
         />
       </div>
     );
