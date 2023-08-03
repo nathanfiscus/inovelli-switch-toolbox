@@ -167,7 +167,7 @@ class App extends React.Component {
 
   setConfigValue = (key, attr, v) => {
     this.setState((lastState) => {
-      let config = lastState[key];
+      let config = JSON.parse(JSON.stringify(lastState[key]));
       if (attr === "all") {
         if (lastState.selectedLEDLight === "all") {
           config[lastState.selectedLED] = Array(7).fill({ ...v });
