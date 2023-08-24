@@ -5,7 +5,7 @@ export default {
   protocol: "zwave",
   id: "onoff",
   displayName: "On\\Off Switch",
-  model: "LZW30",
+  model: "LZW30-SN",
   paddles: [
     {
       id: "up",
