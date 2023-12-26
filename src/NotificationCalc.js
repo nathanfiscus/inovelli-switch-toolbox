@@ -225,7 +225,13 @@ class NotificationCalc extends React.Component {
         this.props.config[this.props.byteOrder[3]],
       ]).toString(Number(this.props.format || 10));
     } else {
-      let arr = Object.values(this.props.config);
+      //let arr = Object.values(this.props.config);
+      let arr = [
+        this.props.config.effect,
+        this.props.config.color,
+        this.props.config.level,
+        this.props.config.duration,
+      ];
       if (this.props.selectedLED !== "all") {
         arr = [6 - this.props.selectedLED, ...arr];
       }
