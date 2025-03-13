@@ -33,15 +33,10 @@ export default {
   ],
   effects: [
     { name: "Solid", value: 1, animation: "solid" },
-    {
-      name: "Chase",
-      value: 2,
-      animation: "chase",
-      speed: 225,
-    },
-    { name: "Fast Blink", value: 3, animation: "blink", speed: 400 },
-    { name: "Slow Blink", value: 4, animation: "blink", speed: 800 },
-    { name: "Pulse", value: 5, animation: "pulse", speed: 400 },
+    { name: "Fast Blink", value: 2, animation: "blink", speed: 400 },
+    { name: "Slow Blink", value: 3, animation: "blink", speed: 800 },
+    { name: "Pulse", value: 4, animation: "pulse", speed: 400 },
+    { name: "Chase", value: 5, animation: "chase", speed: 225 },
     { name: "Open/Close", value: 6, animation: "openClose", speed: 225 },
     { name: "Small to Big", value: 7, animation: "smallToBig", speed: 225 },
     {
